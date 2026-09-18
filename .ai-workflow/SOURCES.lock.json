@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "sources": {
+    "superpowers": {
+      "kind": "vendored",
+      "repository": "https://github.com/obra/superpowers.git",
+      "version": "6.3.0",
+      "commit": "b36e0829c6d0140e93cfef2ca599b1b07d4a7797",
+      "license": "MIT",
+      "snapshot_root": "skills",
+      "upstream_file_count": 46,
+      "omitted_upstream_paths": [
+        "skills/systematic-debugging/CREATION-LOG.md",
+        "skills/systematic-debugging/test-academic.md",
+        "skills/systematic-debugging/test-pressure-1.md",
+        "skills/systematic-debugging/test-pressure-2.md",
+        "skills/systematic-debugging/test-pressure-3.md"
+      ],
+      "update_index": "https://api.github.com/repos/obra/superpowers/tags"
+    },
+    "superpowers_codex_metadata": {
+      "kind": "packaging_metadata",
+      "distribution": "openai-curated-remote/superpowers",
+      "version": "6.3.0",
+      "retrieved_on": "2026-09-17",
+      "file_count": 14,
+      "reconstruction": "package-id-version-plus-FILES.sha256"
+    },
+    "misayhuiyi_rules": {
+      "kind": "research_only",
+      "repository": "https://github.com/Misayhuiyi/Rules.git",
+      "commit": "cf54b1309db3eb7651125d9e66de76417296ee31",
+      "license": null,
+      "copied_files": 0
+    }
+  }
+}

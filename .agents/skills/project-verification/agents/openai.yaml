@@ -1,0 +1,6 @@
+interface:
+  display_name: "项目验收与证据"
+  short_description: "Bind acceptance claims to current evidence"
+  default_prompt: "Use $project-verification to handle the current request within its approved scope."
+policy:
+  allow_implicit_invocation: true

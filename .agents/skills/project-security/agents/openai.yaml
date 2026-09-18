@@ -1,0 +1,6 @@
+interface:
+  display_name: "项目安全审查"
+  short_description: "Review concrete project trust boundaries"
+  default_prompt: "Use $project-security to handle the current request within its approved scope."
+policy:
+  allow_implicit_invocation: true

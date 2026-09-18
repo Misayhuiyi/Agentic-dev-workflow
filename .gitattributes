@@ -1,0 +1,16 @@
+* text=auto
+
+/.gitattributes text eol=lf
+/.gitignore text eol=lf
+
+# Preserve workflow source and adapter fingerprints across platforms.
+/AGENTS.md -text
+/CLAUDE.md -text
+/GEMINI.md -text
+/.agents/** -text
+/.claude/** -text
+/.ai-workflow/** -text
+
+/README.md text eol=lf
+/README.en.md text eol=lf
+/docs/README.md text eol=lf
