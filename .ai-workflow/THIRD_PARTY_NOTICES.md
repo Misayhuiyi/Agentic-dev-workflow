@@ -2,7 +2,7 @@
 
 ## Superpowers
 
-The 46 files identified as upstream content in `third_party/superpowers/FILES.sha256` are redistributed from `obra/superpowers` version 6.3.0, commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`, under the MIT license preserved in `third_party/superpowers/LICENSE`. Five unreferenced development-only files are omitted as recorded in `SOURCES.lock.json` and `third_party/superpowers/PATCHES.md`.
+The 46 upstream-derived files in `third_party/superpowers/FILES.sha256` originate from `obra/superpowers` version 6.3.0, commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`, under the MIT license preserved in `third_party/superpowers/LICENSE`. The 14 `SKILL.md` entrypoints contain local activation-boundary patches, recorded with original and distributed hashes in `SOURCES.lock.json`; see `third_party/superpowers/PATCHES.md` for the rationale and verification. Other upstream resources remain unchanged. Five unreferenced development-only files are omitted as recorded in the same files.
 
 ## Codex packaging metadata
 

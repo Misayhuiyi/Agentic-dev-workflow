@@ -1,9 +1,15 @@
 ---
 name: test-driven-development
-description: Use when implementing any feature or bugfix, before writing implementation code
+description: Use when implementing nontrivial or high-risk behavior needing a staged red-green-refactor method, or when explicitly requested. Clear low-risk local features and fixes use their project Skill's regression checks.
 ---
 
 # Test-Driven Development (TDD)
+
+## Project activation boundary
+
+Apply this method only when the project's lifecycle route selects it for substantial complexity or risk, or the user explicitly requests its use. Without an explicit request to use this method, conversation, read-only explanation/status, and clear low-risk local work stay with root rules and the applicable project Skill; return there if loaded for those tasks. Preserve applicable tests, root-cause checks, and fresh evidence without loading extra methods.
+
+The instructions below govern this selected method, not every user request. Recheck relevance before any nested method call. References named `superpowers:<name>` mean this project's pinned `../<name>/SKILL.md`, not an installed global plugin. User authorization and root task sizing govern all steps.
 
 ## Overview
 
@@ -15,7 +21,7 @@ Write the test first. Watch it fail. Write minimal code to pass.
 
 ## When to Use
 
-**Always:**
+**Within the selected nontrivial or high-risk implementation:**
 - New features
 - Bug fixes
 - Refactoring

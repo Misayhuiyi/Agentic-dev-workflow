@@ -1,20 +1,20 @@
 {
   "generated": {
     ".claude/skills/brainstorming/SKILL.md": {
-      "sha256": "8fb52022a6ca0ed2bc03a3300adce786d50618ce4bedb0f5df018d1f935825c4",
-      "source_fingerprint": "74edf03ea6d24ef53db48677b93558d14a979bdf052ca3f57ecdca0c66791608"
+      "sha256": "399343c90da564542707073272e6b1558c5108a41c438fbe3649ec8c21f10f1a",
+      "source_fingerprint": "be19b5087fdaf2ec99c2de85659606d5b153c2d704d55ac39652e8e1f7d4d3d2"
     },
     ".claude/skills/dispatching-parallel-agents/SKILL.md": {
-      "sha256": "71dce467ffea330a926e2988ddc8933689db9ef2902e0cc58aee5fe0cac2abd6",
-      "source_fingerprint": "1968923066f3b707eb01d1992cdf4c42284c3855f70253b9cd5000ff45fca13c"
+      "sha256": "778d3c979e970900c82909a43687ff6a9e827c6d7c55725ae2c54d2319561804",
+      "source_fingerprint": "af824d60e95c95063091795bbbe5a2306a1fc2a707ae359c84e7999a28b91069"
     },
     ".claude/skills/executing-plans/SKILL.md": {
-      "sha256": "19cb5b8451bbfaa9813bd34880ab8545ead7d7336b76e4d327946c9ef2c8dcab",
-      "source_fingerprint": "c4c3d8b628c51114cd165fb8246fe02744cd8be180032328391252e653028d9b"
+      "sha256": "2ff208c71421516206faf070ca20886a621ce5fb75eb03643531a43eff26694a",
+      "source_fingerprint": "6ee90a8fb395fd65228c45d64af407e93deb9b9fe53614dda446dd15cd81e78c"
     },
     ".claude/skills/finishing-a-development-branch/SKILL.md": {
-      "sha256": "815984e7973ff70cb37f206b1dd16b6254102abe42e5338eaf331bea7761fa3d",
-      "source_fingerprint": "8db5a922b242dd4e1bf824cb91c13b3e8d8e8a86d6ceaf7f0774eb9cce909d65"
+      "sha256": "2647c5d816c82c26d7512f05dbefcf727990f673ca25b5a8f222912f8c4ee1bf",
+      "source_fingerprint": "5b7dacd0350594e644d3cef3f073482679e0cdc219572e8886c62a4cd55715e5"
     },
     ".claude/skills/maintaining-project-docs/SKILL.md": {
       "sha256": "5e81e3300677f1c8ab294d9ed4375a47015c338d1d1d04f72338637531781f63",
@@ -26,19 +26,19 @@
     },
     ".claude/skills/project-development/SKILL.md": {
       "sha256": "0dd6719c26e444b989118ba862db6bd703224c98ad847d348b3060aa80013c23",
-      "source_fingerprint": "18810b6035fbe55c2db23f3f52d44520983423cfeae23aff679dd8a9632862ba"
+      "source_fingerprint": "0043351ddc7564439554c183c4230f8cfd1eb89ab9de29e0de74cd8fb22af564"
     },
     ".claude/skills/project-incident-response/SKILL.md": {
       "sha256": "0dab65c1bfa5244fe206d31dda8274110cf006b6e30d57e095ab8afca6c079f2",
-      "source_fingerprint": "7b03796a4e14d9a660875583225fa4fdf0af209eba5b6f354a30c413fa6e1892"
+      "source_fingerprint": "12b3c293c29ca431964abdfeb258acb9ceb403d205a41cdcd2d9eae60d24fbfe"
     },
     ".claude/skills/project-kickoff/SKILL.md": {
       "sha256": "8811a67a1102de300467be26225d64e3b62d70c3fc084ffab98752818c41917e",
-      "source_fingerprint": "e6e7cdec9644c0ec74c1d078cbe467e1234b064b8e196ce2de23ba8b682053e7"
+      "source_fingerprint": "78294ff2f6642a9bf7007cbac62aee84d1b9906445af585351a24357df503272"
     },
     ".claude/skills/project-maintenance/SKILL.md": {
       "sha256": "19aa04fa10c35b74c28c9bf35ca9cb4a8e53a88ee0758a8c42cd289b1e99cdb6",
-      "source_fingerprint": "6c6a526f84cc2306dd69564d2539999d4670f3564c73967b2766af6550aa74f1"
+      "source_fingerprint": "c138e1f5c1499197144af2247230118ae1f8c7f69448740cb64f2a0b2be95529"
     },
     ".claude/skills/project-organization/SKILL.md": {
       "sha256": "b09f15b1e673734d7686e9f255fc16e96ee487fa68cd11c702a83a276b134e76",
@@ -50,59 +50,59 @@
     },
     ".claude/skills/project-security/SKILL.md": {
       "sha256": "62b961798d38e1adb7de03d10b1a8b9361274628bdbac285b4c600bf40465d0a",
-      "source_fingerprint": "cdb8a7ef875a72f38d9c145915b33909c9d07bb9b7794f274cc16c601ea067f1"
+      "source_fingerprint": "43b1a47b27176de844a391eaebdd1ab272bed01fb3449c792852ecdb09f675fc"
     },
     ".claude/skills/project-verification/SKILL.md": {
-      "sha256": "b2d73c8228df514b661600890dbdd5800ab54bf0948833a4e6764a18fd0f18a4",
-      "source_fingerprint": "536cbba57b6a9388ccdf7a082ca922f292583df43234378b6266acc1258a4261"
+      "sha256": "6a29fa6583819663013270b74e992fb76481f5523611114f76b1212e6fe1ee5f",
+      "source_fingerprint": "a7bc7994d268e4c55421f71b6c9430d63eb5b3ecca7a624528c5caaacab7d2fb"
     },
     ".claude/skills/receiving-code-review/SKILL.md": {
-      "sha256": "75e009666e65c05788d11e59334710c54b2d33cf2d85414bfd87fd7946908ad9",
-      "source_fingerprint": "091df1629510af1b92fc4abd6f96732ebedb4cb2c0f3457e8f2740b0504a2438"
+      "sha256": "8981b137b56a3c89f5690c9a72dd8101ac410584f61204ad6780a74d9b16c12d",
+      "source_fingerprint": "2718f532066eedf6f37c6d9a41ac7aac76c30f0dcdb43c7a7e96d9a8bfa2b236"
     },
     ".claude/skills/requesting-code-review/SKILL.md": {
-      "sha256": "dfa77e200fa9b5990f1b22f58fb1cdef69f000bbbfe5da80df41e4ec54b445cc",
-      "source_fingerprint": "d71cc01ba56d2325cf8af5f7c11837819b63ecd57de0bfdb812f7f3ff7751df8"
+      "sha256": "79e8edd306850b6355cb48d2895c41fdeaeb34489535f5e58779ee6f47d5e40f",
+      "source_fingerprint": "844ec89ad59972bc951df14cf95f2d9efe0cbe38bf9de1de134e3a71ee2bbe07"
     },
     ".claude/skills/subagent-driven-development/SKILL.md": {
-      "sha256": "588034f2d5eafac1f4d7c30332950234c5e2132b32562a1bdc980c4b8a0e7713",
-      "source_fingerprint": "8dd1b8e698edec3700c6d89517dbe96febd3bacd3f6ea21c1a3569c62ea104b5"
+      "sha256": "81f9f283dcdd72736e38ce8e2a8a0800cefa190d442ac984a0d2e82bb22969a1",
+      "source_fingerprint": "8b0b8ae2ee96c52d5154c992e9529e45db394d39c64e3fd1a1b52d91276c939b"
     },
     ".claude/skills/systematic-debugging/SKILL.md": {
-      "sha256": "a5a5c58ac7ce5020c2e907ceae8f50e90da6f7299e8561e834a4c42a72b4f5ec",
-      "source_fingerprint": "808fc5717aa88ad65efff312b11c186294d3e6ee301afb584e2f86599b137787"
+      "sha256": "028e1f2dd2e028ca4649edb55950bab1b4880ec67d208effc3f81cdec0cf3761",
+      "source_fingerprint": "00fa4e664c414f9edead907b39cc53319ea24104e57eeaad02995bfec03e1881"
     },
     ".claude/skills/test-driven-development/SKILL.md": {
-      "sha256": "ccd9f2e53f5ff44271fdd9cff9bedb47c0f8024648dba0ebe8bbd89132b8f994",
-      "source_fingerprint": "bf1b8216e523851a411e91d429a7c1c2a173e79d88957bc78e348218d50edd54"
+      "sha256": "4efe1d9d239cb3d8264cbfd33abd1f6cec35843076da7b336ca45b263465886d",
+      "source_fingerprint": "86d58b258881d70210a6315e935e842aee6f936d05b1f05589318e863f9aceba"
     },
     ".claude/skills/using-git-worktrees/SKILL.md": {
-      "sha256": "9bd7336fbf111fb1f5e254dd4ee5cc7f3b6d5ee052637f2ea6a0aa03bb229f35",
-      "source_fingerprint": "8cfb86f121269e8f7f12361e6795c4f6738828340e28964c9229d365666c9edd"
+      "sha256": "e2f17374742014b52ef955c20de6215b8d05ff9cad15cd92d8a18041131f3a2e",
+      "source_fingerprint": "001de828e39b39ebbc549de3a8e3bc9753506f8f74ccf09daf83a448529caa43"
     },
     ".claude/skills/using-superpowers/SKILL.md": {
-      "sha256": "1345cd0f442d72df853fc5450281a5822f6d420bc25080c76223376617121587",
-      "source_fingerprint": "30f2ab78e20ddc27ee7158ae8d4a2abe161c360981c7cc3548070913142d3dc3"
+      "sha256": "252359c9046c421e0d2f494fde0c64b8717905274ecfed40054bb8a9d37aae3a",
+      "source_fingerprint": "0f7a7eeb15519889ee13ae8db038362d20c449f2fead3e0d46a2e1b6c7acc25d"
     },
     ".claude/skills/verification-before-completion/SKILL.md": {
-      "sha256": "469871177056ed2f21a0f847761669371fe1daafd668b044981f9f10f3415422",
-      "source_fingerprint": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3"
+      "sha256": "fea51a44df3f07e90bc83850f3f9a16b08b4f51611472f577019818faec3074a",
+      "source_fingerprint": "c3c4bb94b02fcb77a6d10ed5e004ce61f05ce01574fad8a0fa26e4520187faf8"
     },
     ".claude/skills/writing-plans/SKILL.md": {
-      "sha256": "39fdd54534fd91905b1af12739e852e4a803be7278520353750cff7185dd015b",
-      "source_fingerprint": "48508f44bbfd7d24b029fbf3a314f3cd14c9615599059366e922f47b8dc08cf2"
+      "sha256": "de82cb4b11f331ec34a64770025bddb7664da026e3bcde23b4db46bb2c4e2980",
+      "source_fingerprint": "2025ac97f2a796cf3ad4c4dc7ddeed85e9562701c0908735536fd838955b6b66"
     },
     ".claude/skills/writing-skills/SKILL.md": {
-      "sha256": "56dafdaedb7edc6cd3f8ff0b9e52026b8c5378822d70a67bdc121653be59ce75",
-      "source_fingerprint": "d34db5c8aed6a4e0440132bd0613aace70a693ec7819d5637ad77481d8e10d1b"
+      "sha256": "1d8e3b49bd25cb099af0a8121478a3f76bec4f8ee2765e9bbe8f8327825a0905",
+      "source_fingerprint": "10e02f4cb36c8bcb8bbfb8f71d487be5d8501a0b9ee48d1c2a071f067600689f"
     },
     "CLAUDE.md": {
       "sha256": "4591f8c6c2b09ecb1db65bd76ad1a6fd909088fc162b23d0d41384bb0720c2ef",
-      "source_fingerprint": "0671ba19f4db323ceb2083636559276b5b9d10cc533a918b2665a426d69f7600"
+      "source_fingerprint": "e9d455b438320e7c506f7869b1f43fb107c5d951eb25428368b775c752d93818"
     },
     "GEMINI.md": {
       "sha256": "a6ee56b93e24da780ddf9f6c2aea0acade4f78a7962c21656d0a95e76a735576",
-      "source_fingerprint": "0671ba19f4db323ceb2083636559276b5b9d10cc533a918b2665a426d69f7600"
+      "source_fingerprint": "e9d455b438320e7c506f7869b1f43fb107c5d951eb25428368b775c752d93818"
     }
   },
   "schema_version": 1

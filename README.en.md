@@ -6,13 +6,14 @@ A long-term AI development workflow foundation that can be placed directly in a 
 
 It addresses *how to work with AI on development continuously and methodically*. It does not choose a framework for you or generate a business architecture. Small modules, small projects, existing products, and large systems can all use it: the workflow changes with the **risk and complexity of the current change**, not with the size of the project.
 
-- For simple, well-defined changes: understand the existing implementation, make the change, and verify it. No extra design document or plan is required.
+- For ordinary conversation, knowledge questions, and read-only explanations: answer directly, consulting only relevant files when project facts are needed.
+- For simple, well-defined, low-risk changes: use the matching lifecycle Skill to implement and verify, without automatically loading Superpowers methods.
 - For complex work or work with unresolved choices: clarify the design first, then proceed in stages using a single plan.
 - When switching sessions or Agents: recover from project documentation, task state, and the actual workspace instead of relying on chat memory.
 - When the project root is cluttered: classify the contents and propose a move plan first; after approval, reorganize the directories, update references, and verify the result.
 - To control context: keep long-lived rules concise, and read Skill bodies and detailed references only when needed.
 
-Current template version: `2.0.0`. It includes **10 project lifecycle Skills and 14 Superpowers method Skills**, with no sample application code, acceptance-test sample projects, or build history.
+Current template version: `2.0.1`. It includes **10 project lifecycle Skills and 14 Superpowers method Skills**, with no sample application code, acceptance-test sample projects, or build history.
 
 ## 1. Get started in three minutes
 
@@ -87,6 +88,7 @@ Usually, you can simply describe what you need and let the Agent choose an entry
 
 | What you want to do | Entry point, as needed |
 | --- | --- |
+| Have an ordinary conversation, ask a knowledge question, or request a read-only explanation or status | Answer directly; read relevant files for project facts, without automatically loading method Skills |
 | Start a project from scratch or integrate the workflow into an existing project for the first time | `project-kickoff` |
 | Build a feature, refactor, fix an ordinary non-production bug, or execute an approved plan | `project-development` |
 | Resume a task, switch sessions, pause, or hand off work | `project-continuity` |
@@ -105,7 +107,7 @@ Add an optional parameter to the existing function while preserving the old call
 Acceptance criterion: [specific boundary behavior]. Complete the change and run the existing verification.
 ```
 
-When the goal, acceptance criteria, and boundaries are clear and the change follows an existing pattern, a short explanation followed by implementation is enough. A new spec, plan, parallel task, or iteration log is not required. Copy and link edits should not expand into refactors either.
+When the goal, acceptance criteria, and boundaries are clear and a low-risk local change follows an existing pattern, use only the matching lifecycle Skill, briefly explain the approach, then implement and verify. Do not automatically load any Superpowers method. Applicable regression tests, root-cause investigation, and fresh workspace evidence for completion claims still apply; these requirements do not require reading the full TDD, debugging, or completion-verification method. A new spec, plan, parallel task, or iteration log is not required.
 
 ### Complex work
 
@@ -174,7 +176,7 @@ py -3 -B .ai-workflow/scripts/project_status.py --root . --task TEXT-001 --forma
 py -3 -B .ai-workflow/scripts/project_status.py --root . --task TEXT-001 --check-view
 ```
 
-On macOS or Linux, replace `py -3 -B` with `python3 -B`. The script uses only the Python 3.10+ standard library. It has been tested for this release on Windows with Python 3.11.9; other systems need verification in their own projects.
+On macOS or Linux, replace `py -3 -B` with `python3 -B`. The script uses only the Python 3.10+ standard library. Version `2.0.0` was tested on Windows with Python 3.11.9; other systems need verification in their own projects.
 
 If no task record exists, create a real record from the template first; do not fabricate a snapshot. When several tasks exist, do not guess based on the “latest date.” After relevant files change, old verification becomes stale or unknown and cannot continue to be treated as passing. A missing or stale view makes `--check-view` return 1; a structural error returns 2. If Python is unavailable, manually check the same six items and state that they were not automatically verified.
 
@@ -188,19 +190,31 @@ This is not real-time monitoring or permanent memory. Reliable continuation depe
 
 ## 7. Why Skills are loaded on demand
 
-`AGENTS.md` contains only long-lived constraints, grading rules, and entry points; Skill names and descriptions support discovery; bodies are read when used; and reference files are opened only when needed for the current step. In general, one lifecycle Skill owns the scope, combined with the necessary methods:
+`AGENTS.md` contains only long-lived constraints, grading rules, and entry points; Skill names and descriptions support discovery; bodies are read when used; and reference files are opened only when needed for the current step. Classify the current request before choosing what to read:
+
+| Current request | Loading scope |
+| --- | --- |
+| Ordinary conversation, a knowledge question, or a read-only explanation or status query | No automatic method workflow; consult only relevant files when project facts are needed |
+| A low-risk local task with clear goals, acceptance criteria, and boundaries that follows an existing pattern | One matching lifecycle Skill; no automatic Superpowers method loading |
+| Non-simple or high-risk work, multi-step dependencies, or a complex unknown failure | One lifecycle Skill owns the scope and selects only the specific methods needed at the current stage |
+| An explicit request to use a method | Use the requested method; merely naming it or asking what it means is not an invocation request |
+
+Method loading is separate from basic quality requirements: simple tasks still need applicable tests, root-cause checks, and verified evidence. Add a method when risk or complexity increases. Starting a new conversation alone does not trigger Superpowers or imply resuming an old task.
+
+The following methods remain available for automatic discovery when applicable, under the primary lifecycle route:
 
 | Method | Purpose |
 | --- | --- |
 | `brainstorming`, `writing-plans` | Resolve open design choices and prepare complex implementation plans |
-| `test-driven-development`, `systematic-debugging` | Test features and fixes, and diagnose unknown failures |
-| `verification-before-completion` | Support completion claims with fresh evidence |
-| `requesting-code-review`, `receiving-code-review` | Conduct independent review and handle review feedback |
+| `test-driven-development`, `systematic-debugging` | Design tests for non-simple or high-risk features and fixes, and systematically investigate complex unknown failures |
+| `verification-before-completion` | Check verification gates for non-simple or high-risk delivery; simple tasks verify evidence within their primary route |
+| `requesting-code-review`, `receiving-code-review` | Handle work needing in-depth or independent review and complex review feedback |
 | `dispatching-parallel-agents`, `subagent-driven-development`, `executing-plans` | Coordinate independent work or execute an existing plan when needed |
 | `using-git-worktrees`, `finishing-a-development-branch` | Isolate work and handle integration wrap-up when needed |
-| `writing-skills`, `using-superpowers` | Author method capabilities and provide the method-discovery entry point |
+| `writing-skills` | Validate scenarios when creating a Skill or materially changing its behavior |
+| `using-superpowers` | Optional guidance for method selection or integration troubleshooting; not a session startup entry point |
 
-General knowledge questions do not require the project development workflow. A tool's own system or developer instructions, global plugins, or mandatory Skill loading may add context; project files cannot override higher-level rules. This template therefore aims to reduce duplication and irrelevant reading, but **does not promise a fixed percentage of token savings**.
+Version `2.0.1` adds project applicability boundaries to the descriptions and entry sections of all 14 methods, and removes the session-start, before-any-response, and “1% chance” mandatory chain from `using-superpowers`. See [PATCHES.md](.ai-workflow/third_party/superpowers/PATCHES.md) for the changes. This template aims to reduce duplication and irrelevant reading, but **does not promise a fixed percentage of token savings**.
 
 ## 8. AI tool adapters and actual boundaries
 
@@ -216,6 +230,8 @@ General knowledge questions do not require the project development workflow. A t
 Other tools can also be pointed explicitly to these files if they can read project rules and Markdown Skills. An ordinary chat interface without file, terminal, and write access can only discuss or review the project; it cannot actually operate on local files. This template does not grant a host additional tools or permissions.
 
 Do not maintain separate full copies of the same rules. The Claude and Gemini entry points only forward to the source of truth. No extra `.dsh/skills/` directory is created for DeepSeek Harness because it might take precedence over the shared entry point.
+
+Project methods and a globally installed Superpowers plugin with the same names are independent sources. These patches affect only the canonical `.agents/skills/` files and their adapters; they do not modify global plugins. References between methods should continue to resolve to the project copies. A Skill catalog already injected into the current session may not refresh when files change; after updating, verify sources through the host's supported rediscovery mechanism or a new session. If the host still mandates a separate plugin, check its configuration and higher-priority rules. The template cannot guarantee that every host will suppress all loading.
 
 ## 9. Two helper scripts
 
@@ -251,7 +267,9 @@ py -3 -B .ai-workflow/scripts/sync_adapters.py --root . --allow-extra-skills --c
 
 ## 11. Verification scope and what this template cannot guarantee
 
-As requested for this release, testing used native subtasks and real temporary projects within the current session host, without calling the Codex CLI again. Independent subtasks do not inherit the parent chat history, but they still share host rules, tools, and discoverable Skill directories. This is not fully isolated, cross-product certification.
+Targeted `2.0.1` verification in the current session host compared the same small feature under the old and revised rules. The old route read TDD, completion verification and method references; the revised route read only `AGENTS.md` and `project-development`, with 2/2 feature regression tests passing. A separate simple bug fix also loaded no Superpowers method, reproduced the failure before fixing it, and passed 3/3 tests. Five read-only routing scenarios covered conversation, Skill explanation, a small documentation edit, substantial design and production diagnosis; these are routing checks, not five end-to-end product tests. All 24 Skills passed UTF-8 format validation; the development workspace passed 11/11 adapter tests and 9/9 source-patch checks. The delivery's 26 adapters and 60 third-party files passed consistency checks. Billed tokens and other hosts' automatic discovery behavior were not measured.
+
+The following are historical, limited `2.0.0` scenarios run with native subtasks and real temporary projects within the current session host, without calling the Codex CLI. Independent subtasks do not inherit the parent chat history, but they still share host rules, tools, and discoverable Skill directories. This is not fully isolated, cross-product certification, and those historical results alone do not establish that the `2.0.1` trigger boundaries pass runtime verification.
 
 Limited scenarios and independent rechecks on 2026-09-18 produced these results:
 
@@ -261,7 +279,7 @@ Limited scenarios and independent rechecks on 2026-09-18 produced these results:
 - Directory organization: approved document and code-module moves updated links and imports. The original entry-point output was unchanged, 1/1 test passed, and moved-file fingerprints matched.
 - Additional scenarios covered planning without implementation, read-only recovery of ambiguous/stale tasks, diagnosis without repair, a single-link documentation fix, and a read-only tenant-boundary review. Actual file differences were checked; these scenarios did not expand their authorized scope.
 
-Test projects, logs, scoring tools, and build history remain outside the template. The requested model setting was GPT-5.6 / high; the host's actual model version, randomness, and billed tokens were not independently verified. The general-knowledge scenario still loaded a general Skill because of host instructions, so it does not demonstrate zero loading overhead. No end-to-end certification was performed on other AI products, macOS/Linux, or production environments. Static adapter consistency is not proof of cross-tool runtime success.
+Test projects, logs, scoring tools, and build history remain outside the template. The requested model setting for those historical scenarios was GPT-5.6 / high; the host's actual model version, randomness, and billed tokens were not independently verified. At that time, the general-knowledge scenario still loaded a general Skill; this helped motivate the `2.0.1` trigger correction and cannot be counted as a passing test of the new boundaries. No end-to-end certification was performed on other AI products, macOS/Linux, or production environments. Static adapter consistency is not proof of cross-tool runtime success.
 
 No set of rules can guarantee that every model on every project will be error-free. Model capabilities, context, tool permissions, and product-specific tests still determine the outcome. High-risk work such as security changes, data migrations, and production releases requires the corresponding review and authorization. This template is a maintainable starting point, not a substitute for quality or security responsibility.
 
@@ -269,6 +287,6 @@ No set of rules can guarantee that every model on every project will be error-fr
 
 The foundational rules were researched with reference to [Misayhuiyi/Rules](https://github.com/Misayhuiyi/Rules). They independently restate principles for investigation, reuse, simple solutions, precise changes, environment adaptation, and verification, without carrying over personalized assumptions such as “there are no existing users.”
 
-The 14 method Skills come from the locked [Superpowers 6.3.0](https://github.com/obra/superpowers/tree/b36e0829c6d0140e93cfef2ca599b1b07d4a7797). Version, license, upstream files, and separately identified UI metadata are documented in the [source lock](.ai-workflow/SOURCES.lock.json) and [third-party notices](.ai-workflow/THIRD_PARTY_NOTICES.md). This project is not an official distribution of any of these AI tools.
+The 14 method Skills are based on the locked [Superpowers 6.3.0](https://github.com/obra/superpowers/tree/b36e0829c6d0140e93cfef2ca599b1b07d4a7797) with this project's on-demand routing patches; their bodies are not all unchanged upstream copies. Version, license, upstream provenance, and separately identified UI metadata are documented in the [source lock](.ai-workflow/SOURCES.lock.json), [third-party notices](.ai-workflow/THIRD_PARTY_NOTICES.md), and [patch record](.ai-workflow/third_party/superpowers/PATCHES.md). This project is not an official distribution of any of these AI tools.
 
 The original workflow is released under the [MIT License](.ai-workflow/LICENSE); see [License Scope](.ai-workflow/LICENSE-SCOPE.md) for details. This does not automatically select a license for your product code, data, images, or product documentation. Project owners should choose their own project license.

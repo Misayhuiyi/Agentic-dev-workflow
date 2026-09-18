@@ -1,9 +1,15 @@
 ---
 name: subagent-driven-development
-description: Use when executing implementation plans with independent tasks in the current session
+description: Use when an approved substantial plan has independent implementation tasks worth delegating in the current session. Not for routine tasks or merely because subagents are available.
 ---
 
 # Subagent-Driven Development
+
+## Project activation boundary
+
+Apply this method only when the project's lifecycle route selects it for substantial complexity or risk, or the user explicitly requests its use. Without an explicit request to use this method, conversation, read-only explanation/status, and clear low-risk local work stay with root rules and the applicable project Skill; return there if loaded for those tasks. Preserve applicable tests, root-cause checks, and fresh evidence without loading extra methods.
+
+The instructions below govern this selected method, not every user request. Recheck relevance before any nested method call. References named `superpowers:<name>` mean this project's pinned `../<name>/SKILL.md`, not an installed global plugin. User authorization and root task sizing govern all steps.
 
 Execute plan by dispatching a fresh implementer subagent per task, a task review (spec compliance + code quality) after each, and a broad whole-branch review at the end.
 

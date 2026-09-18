@@ -5,7 +5,7 @@ description: Use when a production disruption, severe service degradation, suspe
 
 # 生产事故响应
 
-事故先管理影响与恢复，再调试根因；普通非生产 Bug 由 project-development 保持范围与项目事实，根因未确认时进入 systematic-debugging，已确认时复用证据。本 Skill 不因紧急语气扩展环境、数据或操作授权。
+事故先管理影响与恢复，再调试根因；普通非生产 Bug 返回 project-development 按复杂度选择调查方法，已确认根因时复用证据。本 Skill 不因紧急语气扩展环境、数据或操作授权。
 
 1. 按[分级与角色](references/triage-and-severity.md)确定角色、严重性和授权边界。
 2. 界定用户影响、范围、时间和数据/安全风险，分开事实、假设、未知。

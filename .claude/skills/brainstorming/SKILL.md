@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: "Use when substantial product, interface, data, or architecture choices remain unresolved before implementation, or when explicitly asked to develop a design. Not for conversation or clear low-risk local changes."
 ---
 
 Read `../../../.agents/skills/brainstorming/SKILL.md` completely before acting. Resolve every relative resource from that canonical Skill directory.

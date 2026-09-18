@@ -1,9 +1,15 @@
 ---
 name: using-git-worktrees
-description: Use when starting feature work that needs isolation from current workspace or before executing implementation plans - ensures an isolated workspace exists via native tools or git worktree fallback
+description: Use when concurrent or substantial work needs checkout isolation, or when the user explicitly requests a worktree. Not automatically for a feature, plan, or simple fix.
 ---
 
 # Using Git Worktrees
+
+## Project activation boundary
+
+Apply this method only when the project's lifecycle route selects it for substantial complexity or risk, or the user explicitly requests its use. Without an explicit request to use this method, conversation, read-only explanation/status, and clear low-risk local work stay with root rules and the applicable project Skill; return there if loaded for those tasks. Preserve applicable tests, root-cause checks, and fresh evidence without loading extra methods.
+
+The instructions below govern this selected method, not every user request. Recheck relevance before any nested method call. References named `superpowers:<name>` mean this project's pinned `../<name>/SKILL.md`, not an installed global plugin. User authorization and root task sizing govern all steps.
 
 ## Overview
 

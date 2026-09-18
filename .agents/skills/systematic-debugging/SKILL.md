@@ -1,9 +1,15 @@
 ---
 name: systematic-debugging
-description: Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes
+description: Use when a cause remains unclear after focused inspection, failures recur, or diagnosis spans components or high-risk behavior. Not for explaining errors or applying an evidence-confirmed low-risk fix.
 ---
 
 # Systematic Debugging
+
+## Project activation boundary
+
+Apply this method only when the project's lifecycle route selects it for substantial complexity or risk, or the user explicitly requests its use. Without an explicit request to use this method, conversation, read-only explanation/status, and clear low-risk local work stay with root rules and the applicable project Skill; return there if loaded for those tasks. Preserve applicable tests, root-cause checks, and fresh evidence without loading extra methods.
+
+The instructions below govern this selected method, not every user request. Recheck relevance before any nested method call. References named `superpowers:<name>` mean this project's pinned `../<name>/SKILL.md`, not an installed global plugin. User authorization and root task sizing govern all steps.
 
 ## Overview
 
@@ -21,7 +27,7 @@ If you haven't completed Phase 1, you cannot propose fixes.
 
 ## When to Use
 
-Use for ANY technical issue:
+Within a selected nontrivial or high-risk investigation, use for:
 - Test failures
 - Bugs in production
 - Unexpected behavior

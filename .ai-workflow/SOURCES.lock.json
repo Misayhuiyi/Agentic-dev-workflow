@@ -16,7 +16,107 @@
         "skills/systematic-debugging/test-pressure-2.md",
         "skills/systematic-debugging/test-pressure-3.md"
       ],
-      "update_index": "https://api.github.com/repos/obra/superpowers/tags"
+      "update_index": "https://api.github.com/repos/obra/superpowers/tags",
+      "local_patches": [
+        {
+          "path": ".agents/skills/brainstorming/SKILL.md",
+          "upstream_git_blob": "b56a3b5ed6ea0d6216501e0e401ecb00a1b4675f",
+          "upstream_sha256": "74edf03ea6d24ef53db48677b93558d14a979bdf052ca3f57ecdca0c66791608",
+          "distributed_sha256": "be19b5087fdaf2ec99c2de85659606d5b153c2d704d55ac39652e8e1f7d4d3d2",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/dispatching-parallel-agents/SKILL.md",
+          "upstream_git_blob": "3fa091b348bbe0a18eaa0e17e9092c97f7005cbe",
+          "upstream_sha256": "1968923066f3b707eb01d1992cdf4c42284c3855f70253b9cd5000ff45fca13c",
+          "distributed_sha256": "af824d60e95c95063091795bbbe5a2306a1fc2a707ae359c84e7999a28b91069",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/executing-plans/SKILL.md",
+          "upstream_git_blob": "b51d97d2cc4c2ecc5eabecf27e499aa8c933efac",
+          "upstream_sha256": "c4c3d8b628c51114cd165fb8246fe02744cd8be180032328391252e653028d9b",
+          "distributed_sha256": "6ee90a8fb395fd65228c45d64af407e93deb9b9fe53614dda446dd15cd81e78c",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/finishing-a-development-branch/SKILL.md",
+          "upstream_git_blob": "fa8aecaf8813f1b19d19996f7957d1b0121f2d9c",
+          "upstream_sha256": "8db5a922b242dd4e1bf824cb91c13b3e8d8e8a86d6ceaf7f0774eb9cce909d65",
+          "distributed_sha256": "5b7dacd0350594e644d3cef3f073482679e0cdc219572e8886c62a4cd55715e5",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/receiving-code-review/SKILL.md",
+          "upstream_git_blob": "950da7b74bf6dbed6b8726d12ddadd65a9f5fda7",
+          "upstream_sha256": "091df1629510af1b92fc4abd6f96732ebedb4cb2c0f3457e8f2740b0504a2438",
+          "distributed_sha256": "2718f532066eedf6f37c6d9a41ac7aac76c30f0dcdb43c7a7e96d9a8bfa2b236",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/requesting-code-review/SKILL.md",
+          "upstream_git_blob": "fa4f2f9965591d6d8a7ef4ad47e6ba4d5ac344d0",
+          "upstream_sha256": "d71cc01ba56d2325cf8af5f7c11837819b63ecd57de0bfdb812f7f3ff7751df8",
+          "distributed_sha256": "844ec89ad59972bc951df14cf95f2d9efe0cbe38bf9de1de134e3a71ee2bbe07",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/subagent-driven-development/SKILL.md",
+          "upstream_git_blob": "aac35b91c07af15eca580a205eb0c894b86e87c8",
+          "upstream_sha256": "8dd1b8e698edec3700c6d89517dbe96febd3bacd3f6ea21c1a3569c62ea104b5",
+          "distributed_sha256": "8b0b8ae2ee96c52d5154c992e9529e45db394d39c64e3fd1a1b52d91276c939b",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/systematic-debugging/SKILL.md",
+          "upstream_git_blob": "095d194ac041502905f15b01d22d294fb94db8b2",
+          "upstream_sha256": "808fc5717aa88ad65efff312b11c186294d3e6ee301afb584e2f86599b137787",
+          "distributed_sha256": "00fa4e664c414f9edead907b39cc53319ea24104e57eeaad02995bfec03e1881",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/test-driven-development/SKILL.md",
+          "upstream_git_blob": "4320d8879a639d0536c2239bb80c9d7257ad8947",
+          "upstream_sha256": "bf1b8216e523851a411e91d429a7c1c2a173e79d88957bc78e348218d50edd54",
+          "distributed_sha256": "86d58b258881d70210a6315e935e842aee6f936d05b1f05589318e863f9aceba",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/using-git-worktrees/SKILL.md",
+          "upstream_git_blob": "1381dacb3516b94382dd6ec736ede21ee8ede2b3",
+          "upstream_sha256": "8cfb86f121269e8f7f12361e6795c4f6738828340e28964c9229d365666c9edd",
+          "distributed_sha256": "001de828e39b39ebbc549de3a8e3bc9753506f8f74ccf09daf83a448529caa43",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/using-superpowers/SKILL.md",
+          "upstream_git_blob": "7ab2eb678f649c8befb94512359ee0b6e9a9a9a4",
+          "upstream_sha256": "30f2ab78e20ddc27ee7158ae8d4a2abe161c360981c7cc3548070913142d3dc3",
+          "distributed_sha256": "0f7a7eeb15519889ee13ae8db038362d20c449f2fead3e0d46a2e1b6c7acc25d",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/verification-before-completion/SKILL.md",
+          "upstream_git_blob": "7d45333cc4a49c57a80df6c1fe2fa777a207afbc",
+          "upstream_sha256": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3",
+          "distributed_sha256": "c3c4bb94b02fcb77a6d10ed5e004ce61f05ce01574fad8a0fa26e4520187faf8",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/writing-plans/SKILL.md",
+          "upstream_git_blob": "f74605bfa9af7a3fb7e4ad7f17750a86a9b0d728",
+          "upstream_sha256": "48508f44bbfd7d24b029fbf3a314f3cd14c9615599059366e922f47b8dc08cf2",
+          "distributed_sha256": "2025ac97f2a796cf3ad4c4dc7ddeed85e9562701c0908735536fd838955b6b66",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        },
+        {
+          "path": ".agents/skills/writing-skills/SKILL.md",
+          "upstream_git_blob": "f33f39f523c8a3ae2ec0eaf365a524571df8ff3d",
+          "upstream_sha256": "d34db5c8aed6a4e0440132bd0613aace70a693ec7819d5637ad77481d8e10d1b",
+          "distributed_sha256": "10e02f4cb36c8bcb8bbfb8f71d487be5d8501a0b9ee48d1c2a071f067600689f",
+          "reason": "Conditional project method activation (2.0.1); see third_party/superpowers/PATCHES.md"
+        }
+      ]
     },
     "superpowers_codex_metadata": {
       "kind": "packaging_metadata",

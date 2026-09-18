@@ -30,5 +30,21 @@
     "retrieved_on": "2026-09-17",
     "authority": "distribution identity plus FILES.sha256"
   },
-  "note": "Cross-check copy; SOURCES.lock.json is authoritative."
+  "note": "Cross-check copy; SOURCES.lock.json is authoritative.",
+  "locally_patched_paths": [
+    ".agents/skills/brainstorming/SKILL.md",
+    ".agents/skills/dispatching-parallel-agents/SKILL.md",
+    ".agents/skills/executing-plans/SKILL.md",
+    ".agents/skills/finishing-a-development-branch/SKILL.md",
+    ".agents/skills/receiving-code-review/SKILL.md",
+    ".agents/skills/requesting-code-review/SKILL.md",
+    ".agents/skills/subagent-driven-development/SKILL.md",
+    ".agents/skills/systematic-debugging/SKILL.md",
+    ".agents/skills/test-driven-development/SKILL.md",
+    ".agents/skills/using-git-worktrees/SKILL.md",
+    ".agents/skills/using-superpowers/SKILL.md",
+    ".agents/skills/verification-before-completion/SKILL.md",
+    ".agents/skills/writing-plans/SKILL.md",
+    ".agents/skills/writing-skills/SKILL.md"
+  ]
 }

@@ -23,7 +23,11 @@
 
 生命周期唯一主路由：建项 `project-kickoff`；功能、重构、普通非生产 Bug 或批准计划 `project-development`；已有任务恢复、切换、交接 `project-continuity`；目录整理/结构重整 `project-organization`；依赖/工具链 `project-maintenance`；验收 `project-verification`；安全 `project-security`；文档 `maintaining-project-docs`；发布 `project-release`；生产事故 `project-incident-response`。生命周期主路由按当前用户请求的工作类型选择；未完成的计划或测试不能把纯文档、验收、安全或发布请求改路由为开发。新会话本身不等于恢复任务。
 
-动作任务先读取一个适用的生命周期 Skill，再组合方法 Skill。路由明确时不额外加载发现入口；仅展开当前步骤需要的引用。方法触发：未决设计 `brainstorming`；复杂计划 `writing-plans`；功能/修复 `test-driven-development`；未知故障 `systematic-debugging`；完成声明 `verification-before-completion`；审查 `requesting-code-review` / `receiving-code-review`；独立任务并行 `dispatching-parallel-agents`；需要隔离 `using-git-worktrees`；编写 Skill `writing-skills`。宿主更高层指令仍须遵守；一般知识问答不强制开发流程。
+先按当前请求选择加载深度：普通对话、知识问答、只读解释或状态查询直接回答，需查项目事实时只读相关文件；不自动加载生命周期或 Superpowers Skill。明确要求执行审查、诊断、验收等专业工作时才进入对应生命周期。提及某个 Skill 询问含义不等于要求调用。
+
+动作任务先读取一个适用的生命周期 Skill。目标、验收、边界清楚且沿用既有模式的低风险局部任务，在该 Skill 内完成修改、适用回归和新鲜证据核对，不自动加载任何 Superpowers 方法；小任务的测试、根因和验证要求仍然有效。仅在当前阶段确有复杂度或高风险时选方法：未决重要设计 `brainstorming`；复杂计划 `writing-plans`；非简单功能/修复 `test-driven-development`；初步查证后仍不明、反复或跨组件故障 `systematic-debugging`；复杂/高风险交付证据 `verification-before-completion`；重要审查、编排、隔离、Skill 行为设计再选对应方法。明确要求使用某方法时按该方法执行，不扩大授权。
+
+`using-superpowers` 仅是方法选择/集成排错时的可选指南，不在会话开始、回答前或读取文件前触发。直接读取被选中的方法，仅展开当前步骤需要的引用；嵌套方法仍检查适用条件。方法中的 `superpowers:<name>` 指本项目正本，不转调同名全局插件。宿主更高层指令仍须遵守；项目文件不修改全局插件或强制替宿主卸载它。
 
 报告处理链时只列实际采用的“生命周期 → 方法”，不把发现或文件读取算成执行。`.agents/skills/` 是正本，适配文件不复制第二套规则。
 
