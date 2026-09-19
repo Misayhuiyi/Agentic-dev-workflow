@@ -16,7 +16,7 @@ It addresses *how to work with AI on development continuously and methodically*.
 - When the project root is cluttered: classify the contents and propose a move plan first; after approval, reorganize the directories, update references, and verify the result.
 - To control context: keep long-lived rules concise, and read Skill bodies and detailed references only when needed.
 
-Current template version: `2.2.0`. It includes **11 project lifecycle Skills and 14 Superpowers method Skills, for 25 Skills in total**, with 27 managed adapter entry points and no sample application code, acceptance-test sample projects, or build history. Feasibility experiments and human business acceptance reuse `project-verification`; no Skill is added.
+Current template version: `2.3.0`. It includes **11 project lifecycle Skills and 14 Superpowers method Skills, for 25 Skills in total**, with 27 managed adapter entry points and no sample application code, acceptance-test sample projects, or build history. Feasibility experiments and human business acceptance reuse `project-verification`; no Skill is added.
 
 ## 1. Get started in three minutes
 
@@ -69,6 +69,7 @@ project-root/
 ├── .ai-workflow/
 │   ├── ROUTING.md               Selection rules for lifecycle and method Skills
 │   ├── superpowers-compat.md    How Superpowers fits this project's permissions and graduated workflow
+│   ├── references/delivery-loop.md Conditional stage contracts; not required reading for every task
 │   ├── templates/               Templates for project context, research, tasks, designs, and verification
 │   │   ├── research-brief.md    Use when research needs a persistent record
 │   │   ├── feasibility-check.md Record a minimal experiment's question, boundaries, and actual evidence as needed
@@ -111,6 +112,57 @@ Usually, you can simply describe what you need and let the Agent choose an entry
 | Maintain project facts, usage instructions, or documentation | `maintaining-project-docs` |
 | Prepare a release, migration, or rollback | `project-release` |
 | Respond to a production incident or active security impact | `project-incident-response` |
+
+### Route by risk, not project size
+
+Assess five dimensions: requirement clarity; interaction uncertainty; technical/data/integration uncertainty; permissions, external writes, money, privacy and production exposure; blast radius and recovery cost. See [ROUTING.md](.ai-workflow/ROUTING.md).
+
+| Path | Typical work | Minimum approach |
+| --- | --- | --- |
+| A Read-only | Progress, explanation, knowledge | Answer or inspect relevant facts; do not execute pending work |
+| B Clear local change | Button wording, diagnosed low-risk bug | Scope/acceptance → impact check → small edit → regression → result; no mandatory PRD or prototype |
+| C Unclear interaction | Review order, roles, rejection rules | Clarify, then preview if useful; prefer existing components and cover waiting/failure/cancel/reject/takeover |
+| D Backend | APIs, data, retrieval, performance | Contracts, samples, tests, logs, performance and recovery evidence; no mandatory UI |
+| E Core uncertainty | AI quality, algorithms, data/tool integration | Test the riskiest assumption first with samples, thresholds, budget and stop conditions |
+| F High risk | Auto-publish, permissions, deletion, migration | Authority, audit, idempotency and compensation; isolated checks before controlled execution, even for a one-line change |
+| G Production incident | Outage, severe degradation, data/security impact | Contain → authorized recovery → verify → record → retrospective |
+
+Paths can combine, such as C + E, but one current lifecycle route owns scope. A prototype does not prove technical feasibility; a PoC does not prove business usability. MVP reduces scope, not basic quality.
+
+### A loop from the problem to long-term maintenance
+
+A larger business effort can use: problem/current process/baseline → requirements and acceptance → prototype or technical experiment → continue/adjust/reduce/stop → architecture/contracts and plan → small business increments → tests/Eval and human UAT → readiness → deployment and controlled exposure → operating feedback/value → another iteration or retirement. Activities can be trimmed, parallelized and revisited, not repeated as a fixed waterfall.
+
+Security, tests, AI Eval, observability and recovery preparation start during design and each increment. Read [delivery-loop.md](.ai-workflow/references/delivery-loop.md) only when multi-stage coordination needs it; simple tasks skip it. The existing [spec.md](.ai-workflow/templates/spec.md) can contain the PRD; do not create duplicate requirements just to obtain a filename.
+
+Each milestone can use the existing task/plan for requirements and scope/exclusions, greatest uncertainty and its check, operable artifact, acceptance and budget, dependencies/risks/rollback, owner and reviewer. Detail near-term work and keep later work adjustable. Prefer a usable vertical slice over completing every database layer before any usable result.
+
+```text
+Execute only the approved M1 in the existing spec/plan.
+Deliver what changed, how to run or experience it, real versus Mock integrations,
+actual checks and evidence, failures/unverified areas, what I must confirm,
+and whether the next step may proceed.
+If M1 acceptance fails, halt dependent M2; independent authorized work may continue.
+```
+
+Explicit approval of multiple milestones permits continuous work when prerequisites are met, without approval for every function. Stop affected work if a business assumption fails, acceptance is rejected, scope materially expands, a key dependency disappears, budget is exhausted or a new high-risk operation is needed. Design/implementation approval is not production authority; Agent or SDD controller rulings are not human business acceptance.
+
+### Conditional AI/Agent extensions
+
+Add these only when the product itself includes AI/Agent behavior. Using an AI coding assistant for ordinary software does not require a full AI document set. Extend the existing spec using the [Agent contract](.agents/skills/project-development/references/agent-contract.md) and [AI evaluation reference](.agents/skills/project-verification/references/ai-evaluation.md): tool IO/permissions/side effects, context and memory sources, budgets/retries/stops/takeover, and model, Prompt, Skill, tool, knowledge and configuration versions.
+
+Distinguish software tests, AI quality evaluation, business UAT and post-release value. Fix permitted representative samples, development and independent acceptance sets, professional rubrics, baselines/thresholds, randomness and quality/latency/cost trade-offs. LLM judges assist domain reviewers, not replace them. Relevant Prompt, Skill, tool and knowledge changes trigger regression even without code changes.
+
+Merge is not deployment, and deployment is not full exposure. Canary rollout usually already runs in production and requires corresponding authority. Code rollback cannot undo sent notifications or all external business actions. Verify and classify feedback, form an improvement hypothesis, test/Eval, then approve and release; never turn feedback directly into live production rules or persistent memory. An optional [Impact Log](.ai-workflow/templates/iteration.md) records actual baseline, window, sample/metric definitions, results, review/rework costs, limitations and business confirmation, not invented benefits.
+
+### One illustrative example: reusing garment-image processing requirements
+
+This is an example only, not actual company requirements, an implemented feature or an approval:
+
+1. If the interaction is unclear, clarify “choose requirements—apply to one image—edit—review.” Prefer existing components; label Mock data and include cancellation, failure and human takeover.
+2. If AI pattern preservation is unknown, use a bounded PoC with permitted samples, preset quality criteria and budget. Missing sample permission remains a gap; attractive UI is not feasibility evidence.
+3. When evidence supports proceeding, deliver a real single-image-to-human-review loop with an exact candidate, experience steps and evidence. Do not advance dependent batch processing if core acceptance fails.
+4. Human acceptance is not production authority. Check external writes, rollout cohorts, observation, idempotency/compensation and takeover. Measure actual review time/rework and limitations after release before deciding the next iteration.
 
 ### Research before deciding
 
@@ -262,6 +314,8 @@ py -3 -B .ai-workflow/scripts/project_status.py --root . --task-file docs/tasks/
 
 This is not real-time monitoring or permanent memory. Reliable continuation depends on saving the necessary facts before every pause and rechecking code, configuration, and evidence in the new session.
 
+In `2.3.0`, automatic recovery selects only a uniquely matching active task in the current worktree/branch; no match does not fall back to an unrelated branch, and completed tasks are not automatically resumed. With Git but no recorded workspace identity, select the task explicitly. `--task` and `--task-file` still support deliberate historical queries. Without Git, the script can show a unique active record, but the Agent must verify its relevance and existing authority before continuing. State schema 1 is unchanged.
+
 ## 7. Why Skills are loaded on demand
 
 `AGENTS.md` contains only long-lived constraints, grading rules, and entry points; Skill names and descriptions support discovery; bodies are read when used; and reference files are opened only when needed for the current step. Classify the current request before choosing what to read:
@@ -339,31 +393,26 @@ py -3 -B .ai-workflow/scripts/sync_adapters.py --root . --allow-extra-skills --c
 - Before modifying vendored Superpowers content, check its source and license, record the actual patch in `.ai-workflow/third_party/superpowers/PATCHES.md`, and verify affected behavior. A version upgrade does not mean every previous behavior still holds.
 - After project kickoff, the root README should introduce your product. If the template guide still needs to be retained, keep the necessary links in the existing development documentation instead of maintaining two conflicting project homepages.
 
-## 11. Verification scope and what this template cannot guarantee
+## 11. Verification scope and limitations
 
-Limited `2.2.0` verification ran in the current session host without the Codex CLI. On Windows / Python 3.11.9, the delivery scripts passed 18 new acceptance regressions and 32 existing state regressions, covering pending and rejected review, stale decisions, missing technical proof, legacy records, and six-item views. The development copy passed 12 adapter and 9 provenance tests; the delivery passed format checks for 25 Skills, consistency checks for 27 adapters, and 60 third-party file hashes. A real bounded experiment on Windows / Python 3.13.9 confirmed that two Markdown files with Chinese characters and spaces in their names retained paths and bytes through a ZIP round trip; it used only `project-verification`, with no Superpowers method. Five additional read-only scenarios distinguished pending acceptance, explicit rejection, a typo edit, uncertain OCR feasibility, and an established logging change. Those scenarios were not actual business acceptance.
+Limited `2.3.0` verification ran on Windows / Python 3.11.9 in the current Codex desktop conversation host. Historical results are not counted:
 
-The read-only baseline under the old rules already distinguished technical success from human acceptance; it would be incorrect to claim that judgment failed. This release makes the requirement explicit in reusable procedures, persistent state, and script gates. New script assertions failed against the old implementation before turning green. All human approvals in tests were fixtures or scenario assumptions, not your acceptance of this template; actual business effects still need human review.
+| Layer | Actual scope and result |
+| --- | --- |
+| Script behavior regression | Explicit delivery-root binding: 22 state unit tests, 24 status CLI tests, 18 human-acceptance-record tests and 12 adapter behavior tests; all 76 passed, none skipped |
+| Structure and copy installation | 25 Skill metadata files, 27 adapters, 60 upstream file hashes and 14 patch hashes, 165 UTF-8 files, compilation of 5 Python files, 130 local document links and the task template passed; all 165 files retained bytes when copied to a path containing Chinese characters/spaces, and copied adapters passed checks |
+| Implementation samples | Button wording changed only its target file, with 2 existing tests plus wording/byte checks passing; equivalent backend optimization and approved M1 implementation each passed 4 tests. The former includes a reproducible local benchmark, with no added UI; M2 was not implemented |
+| Other host scenarios | Interaction clarification, unknown AI quality, auto-publish, failed core acceptance, status-only, incident, scope change, Mock acceptance and recovery: 9 read-only scenarios. Responses and file fingerprints were checked for scope; no unauthorized writes occurred. Together with the 3 implementation samples, this covers 12 scenario types |
 
-Historical limited `2.1.0` verification ran within the session host at the time, without the Codex CLI. Before/after trials of the same document-only project showed the revised route asking whether to research before browsing or selecting design methods. Five read-only scenarios covered declined research, ordinary explanation, sufficient small-project requirements, research restricted to supplied material, and explaining partial adoption. A separate live trial consulted two public GitHub candidates and official sources, producing a sourced brief with pending recommendations outside the template; candidate code was neither installed nor run. All 25 Skills passed format checks; the development workspace passed 12 adapter tests and 9 provenance tests, and the delivery's 27 adapters and 60 third-party file hashes were consistent. These are limited behavioral examples and static/script checks, not guarantees across all models, tools, or business projects, and cannot count as `2.2.0` verification results.
+The old-rule baseline already respected Mock, cost and human-acceptance boundaries; this release does not claim to fix every prior Agent judgment. Real task-selection defects were reproduced by failing tests before correction. Independent review also found a Windows path-case regression, subsequently covered by failing/passing verification. Interaction states and independent M3 authorization received clarification follow-ups. These are not 12 complete end-to-end product acceptance tests.
 
-That live research trial then received a predefined simulated review: one recommendation rejected, one pending, and one conditionally accepted. Only the existing research record and single plan were updated. The accepted portion gained tasks and acceptance criteria; excluded items did not become implementation tasks. No code, dependencies, or CI files changed. This checks approval-to-document behavior for that trial, not completion of its sample product.
+Scenarios used separate directories outside the template but reused subagent conversations under host task-count limits; they are not all independent blind trials. Shared host rules and Skill discovery can affect results. No repeated multi-model campaign was run, and underlying model version, randomness and billed tokens were not independently verified. Remote links and Markdown anchors were not individually fetched; 15 upstream documentation example links inside code fences were excluded from navigation checks. No real-production, cross-tool or cross-system certification is claimed.
 
-Historical targeted `2.0.1` verification in the session host at the time compared the same small feature under the old and revised rules. The old route read TDD, completion verification and method references; the revised route read only `AGENTS.md` and `project-development`, with 2/2 feature regression tests passing. A separate simple bug fix also loaded no Superpowers method, reproduced the failure before fixing it, and passed 3/3 tests. Five read-only routing scenarios covered conversation, Skill explanation, a small documentation edit, substantial design and production diagnosis; these are routing checks, not five end-to-end product tests. All 24 Skills passed UTF-8 format validation; the development workspace passed 11/11 adapter tests and 9/9 source-patch checks. The delivery's 26 adapters and 60 third-party files passed consistency checks. Billed tokens and other hosts' automatic discovery behavior were not measured.
+Markdown and Skills are **soft behavioral constraints**. This template includes no task executor, authenticated approval service or automatic deployment gate. `project_status.py` checks declared records and bounded fingerprints; it cannot establish reviewer identity, evidence truth or production authority. Tool permissions, production credentials and spending budgets need their respective environment controls. Stronger gates are separate integrations.
 
-The following are historical, limited `2.0.0` scenarios run with native subtasks and real temporary projects within the session host at the time, without calling the Codex CLI. Independent subtasks do not inherit the parent chat history, but they still share host rules, tools, and discoverable Skill directories. This is not fully isolated, cross-product certification, and those historical results alone do not establish that the `2.0.1` trigger boundaries pass runtime verification.
+This run uses no Codex CLI, dependency installation or external paid-model API calls. Fixtures, behavior scoring, logs and development harnesses stay outside the copyable template. There is no CI or one-click installer: installation is a complete directory copy or GitHub template use. Product projects still need their own tests and CI.
 
-Limited scenarios and independent rechecks on 2026-09-18 produced these results:
-
-- Helper tools: 56/56 regression tests passed, covering task selection, stale fingerprints, derived views, path boundaries, adapter conflicts, and rollback after write failures. This includes regressions added after testing exposed completed-task file lookup and Windows path-case alias issues.
-- Small feature: 9/9 application-fixture tests passed, changing only the implementation and test files. Running the new tests against the original implementation detected the missing feature.
-- A/B handoff: the continuation Agent received no parent chat history, recovered from persisted files, and completed the work with 5/5 tests passing. The candidate tool independently rechecked the final record's freshness and view consistency.
-- Directory organization: approved document and code-module moves updated links and imports. The original entry-point output was unchanged, 1/1 test passed, and moved-file fingerprints matched.
-- Additional scenarios covered planning without implementation, read-only recovery of ambiguous/stale tasks, diagnosis without repair, a single-link documentation fix, and a read-only tenant-boundary review. Actual file differences were checked; these scenarios did not expand their authorized scope.
-
-Test projects, logs, scoring tools, and build history remain outside the template. The requested model setting for those historical scenarios was GPT-5.6 / high; the host's actual model version, randomness, and billed tokens were not independently verified. At that time, the general-knowledge scenario still loaded a general Skill; this helped motivate the `2.0.1` trigger correction and cannot be counted as a passing test of the new boundaries. No end-to-end certification was performed on other AI products, macOS/Linux, or production environments. Static adapter consistency is not proof of cross-tool runtime success.
-
-No set of rules can guarantee that every model on every project will be error-free. Model capabilities, context, tool permissions, and product-specific tests still determine the outcome. High-risk work such as security changes, data migrations, and production releases requires the corresponding review and authorization. This template is a maintainable starting point, not a substitute for quality or security responsibility.
+A single Agent scenario does not establish statistical reliability. Unchecked hosts/models, real business UAT, production operation and billed-token savings are not claimed as passing. A host may inject same-name global Skills, retain an older catalog or impose higher-priority rules. No files guarantee error-free results across every tool/model/project; the template supplies a maintainable starting point and explicit evidence boundaries.
 
 ## 12. Sources and licenses
 

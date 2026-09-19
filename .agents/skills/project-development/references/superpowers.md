@@ -18,3 +18,5 @@
 方法可以直接加载，无需先读 using-superpowers。嵌套方法同样检查当前阶段；`superpowers:<name>` 解析为本项目 `.agents/skills/<name>/SKILL.md`，不选择同名全局插件。
 
 恢复只使用 project-continuity，不在本文件维护第二协议。
+
+执行编排前读取[项目兼容合同](../../../../.ai-workflow/superpowers-compat.md)，传入本轮获准的里程碑/任务、计划版本、预算及停止条件。方法的 all-tasks、controller ruling 或执行日志不扩大授权、不豁免人工业务验收；SDD 日志只记录执行过程，原 task-state 仍是唯一项目动态状态。

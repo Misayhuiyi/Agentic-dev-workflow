@@ -15,6 +15,20 @@ Lower layers never authorize commits, external writes, destructive operations, d
 
 ## Primary routes
 
+First assess five dimensions: requirement clarity; interaction uncertainty; technical/data/integration uncertainty; authority, external writes, money, privacy and production exposure; blast radius and recovery cost. These are reasoning inputs, not five compulsory documents. A small diff is not evidence of low risk.
+
+| Change path | Entry and minimum evidence | Advance / stop |
+| --- | --- | --- |
+| A: knowledge, explanation, progress | Direct answer or relevant read-only inspection; no lifecycle, repository writes or unrelated records | Return answer; a new action needs its own scope |
+| B: clear low-risk local change | Applicable project Skill; scope/acceptance → impact check → small edit → regression → result | Fresh relevant evidence; no compulsory PRD, PoC, prototype or Superpowers |
+| C: unclear interaction/business flow | Development, or kickoff for undefined project scope; clarify users, sequence, rules and acceptance; preview only if it resolves uncertainty | Review key states, including waiting/failure/cancel/reject/takeover; reuse existing components before separate HTML |
+| D: backend/API/data/performance | Development/maintenance as appropriate; contracts, samples, tests, logs, comparative performance, consistency/recovery evidence | Sync changed behavior and consumers; UI is not required; uncertain integration adds E |
+| E: uncertain core AI/algorithm/data/tool capability | Current route proposes the riskiest hypothesis; authorized bounded experiment uses verification | Approved representative samples, thresholds, budget, actual results; continue/adjust/reduce/stop decision, not a platform built on an untested assumption |
+| F: high-risk change, even one line | Current action route owns scope; consult security/release only for applicable boundary | Establish business rules, precise authority, audit, idempotency and recovery/compensation; isolate validation before controlled release |
+| G: active production incident | Incident response: contain → authorized recovery → verify → record → retrospective | Do not delay essential authorized response for full documentation; urgency grants no extra permission |
+
+Paths may combine: C + E allows interaction exploration and technical experiments in parallel when independent; neither substitutes for the other. G takes priority for active production impact. A remains read-only regardless of a pending plan. For actions choose one primary lifecycle owner by the current request; supporting references/methods return control to it. Use the [conditional delivery loop](references/delivery-loop.md) only when a multi-stage business effort needs stage contracts; do not load it for every change.
+
 | Work | Primary route |
 | --- | --- |
 | Conversation, knowledge question, read-only explanation or status lookup | Answer directly; inspect relevant facts if needed; no automatic lifecycle or method Skill |
@@ -60,10 +74,18 @@ Store technical verification and human_acceptance separately in the same task re
 
 ## Recovery and handoff
 
-When existing work needs recovery, follow recovery → one lifecycle route → applicable methods → implementation/verification → necessary facts. A fresh conversation with a clear new request starts at its matching lifecycle route; session freshness alone never selects `project-continuity`. `project-development` delegates actual recovery to `project-continuity`; it does not duplicate the task-state protocol. Prefer the user's explicit task ID, then unique worktree/branch matches. Never choose by modification time. Rebuild stale state from code and fresh evidence before continuing.
+When existing work needs recovery, follow recovery → one lifecycle route → applicable methods → implementation/verification → necessary facts. A fresh conversation with a clear new request starts at its matching lifecycle route; session freshness alone never selects `project-continuity`. `project-development` delegates actual recovery to `project-continuity`; it does not duplicate the task-state protocol. Prefer explicit task ID/file; automatic selection must be a unique active match to the current worktree/branch, never a fallback to an unrelated task or done record. Explicit historical lookup remains available. Without Git, verify the user pointer or a unique eligible record rather than guessing. Never choose by modification time. Rebuild stale state from code and fresh evidence before continuing.
 
 Ordinary non-production Bug work keeps `project-development` as scope owner. Investigate before fixing; a cause established by focused inspection may support a low-risk inline repair with regression checks. Use systematic-debugging when uncertainty persists, investigation is nontrivial or risk is high; reuse a root cause already established by evidence. A symptom or proposed fix alone is not root-cause proof. A user's existing repair request supplies repair authorization within its scope; do not ask again merely because diagnosis finished. Diagnosis-only requests do not authorize a fix, and material scope/contract/data changes require confirmation. For production incidents, stabilize first. Dependency maintenance enters security only for an actual relevant trust boundary or explicit security review.
 
 Parallel workers own disjoint files and individual task records. A single integrator updates the shared index and rechecks results; an unstable shared contract requires serial work. No lifecycle or method route creates permission for external operations.
 
 Human entry: root `README.md` or `README.en.md`. Facts and archive rules: `docs/README.md`. The human entry states the tested scope and compatibility limits. Development-only test fixtures, evaluation harnesses and build records are intentionally not part of this copyable project foundation.
+
+## Milestone control is a soft protocol
+
+Pass an execution method only the currently approved milestone/task IDs and applicable spec/plan revision, with acceptance evidence, exclusions, budget, allowed tools and stopping conditions. Explicit approval of several milestones permits progression only when each dependency and human gate is satisfied. Nearby tasks are detailed, distant work stays adjustable. Reuse prior applicable approvals; material scope/contract/candidate changes reopen only affected decisions. Do not make every function a new approval request.
+
+Halt affected dependents when a business assumption fails, acceptance is rejected, scope materially expands, a key dependency is unavailable, budget is exhausted or a new high-risk action is needed. Other independent authorized work may continue. Completion packages identify what changed, how to run/experience it, real integrations versus Mock, fresh checks/evidence, failures/unverified areas, the human decision needed and whether the next step may start.
+
+Project Markdown and method prompts constrain behavior, not tool execution. `project_status.py` reads declared state/fingerprints; it is not a task allocator, authenticated approval system, deployment lock or spending limit. A host/CI may enforce separately configured controls, but this template installs none. Production credentials, tool permissions and paid-call budgets require their respective environment controls. Implementation approval, technical pass, human UAT and release authority remain separate.

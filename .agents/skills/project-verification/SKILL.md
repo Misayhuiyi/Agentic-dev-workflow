@@ -17,4 +17,6 @@ description: Use when a bounded feasibility experiment, human business-module ac
 4. AI/性能变化按[评测合同](references/ai-evaluation.md)固定数据、模型、配置、随机性和预算；输出时逐项显式列出评测合同字段，缺失则写未知或未执行，不用“固定条件”等概括替代。UX/可访问性区分静态审查、浏览器实测和辅助技术证据。
 5. 简单验收在本 Skill 内检查与报告，不自动加载 Superpowers。复杂/高风险交付需要正式证据门槛或重要独立审查时才选 verification-before-completion 或 requesting-code-review；方法 Skill 或子 Agent 的完成声明不能替代实际证据。只读审查保持零写入。
 
+普通软件测试、AI 任务质量评测、业务 UAT、上线后业务价值衡量分别给结论，不能互相代替；非 AI 功能跳过 AI 专项。模型、Prompt、Skill、工具合同、知识和关键配置变化也按影响触发回归，不只看代码是否变化。
+
 输出验收覆盖、可定位发现、本任务结果、已有失败、未执行原因和剩余风险；自审明确标记。缺少必需证据时只能部分验证，不能宣布整个任务完成。

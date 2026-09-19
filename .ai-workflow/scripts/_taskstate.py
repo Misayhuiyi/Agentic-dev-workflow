@@ -312,6 +312,20 @@ def select_task(
             return TaskSelection("ambiguous", None, tuple(sorted(item.id for item in matches)))
         return TaskSelection("selected", matches[0], (matches[0].id,))
 
+    def matches_worktree(binding: str | None, selector: str) -> bool:
+        if not binding:
+            return False
+        recorded = binding.replace("\\", "/").rstrip("/")
+        normalized = selector.replace("\\", "/").rstrip("/")
+        if os.name == "nt" and Path(recorded).is_absolute() and Path(normalized).is_absolute():
+            return os.path.normcase(recorded) == os.path.normcase(normalized)
+        # 兼容单段工作树名；两个带目录的路径不能仅因末段相同而匹配。
+        return recorded == normalized or (
+            "/" not in recorded and recorded == PurePosixPath(normalized).name
+        ) or (
+            "/" not in normalized and normalized == PurePosixPath(recorded).name
+        )
+
     if requested_id is not None:
         return result([item for item in index.tasks if item.id == requested_id], explicit=True)
     if requested_path is not None:
@@ -323,17 +337,17 @@ def select_task(
     if worktree is not None:
         if not worktree:
             return TaskSelection("not_found", None, ())
-        normalized = worktree.replace("\\", "/").rstrip("/")
-        matches = [item for item in index.tasks if item.worktree and (item.worktree.replace("\\", "/").rstrip("/") == normalized or PurePosixPath(item.worktree.replace("\\", "/")).name == PurePosixPath(normalized).name)]
+        matches = [item for item in index.tasks if matches_worktree(item.worktree, worktree)]
         return result(matches, explicit=True)
-    for selector in (detected_worktree, branch):
-        if not selector:
-            continue
-        normalized = selector.replace("\\", "/").rstrip("/")
-        matches = [item for item in index.tasks if item.worktree and (item.worktree.replace("\\", "/").rstrip("/") == normalized or PurePosixPath(item.worktree.replace("\\", "/")).name == PurePosixPath(normalized).name)]
+    active = [item for item in index.tasks if item.state == "active"]
+    if detected_worktree:
+        matches = [item for item in active if matches_worktree(item.worktree, detected_worktree)]
         if matches:
             return result(matches)
-    return result([item for item in index.tasks if item.state == "active"])
+    if branch:
+        return result([item for item in active if item.worktree == branch])
+    # 已核实工作树却没有匹配时不得跳到其他任务；无身份信息保留旧兼容行为。
+    return result([] if detected_worktree else active)
 
 
 def _sample(root: Path, relative: str) -> tuple[str | None, str | None]:
