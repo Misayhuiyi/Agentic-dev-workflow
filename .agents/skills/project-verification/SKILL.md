@@ -1,6 +1,6 @@
 ---
 name: project-verification
-description: Use when acceptance, independent code review, integration evaluation, performance or AI evaluation, UX, or accessibility assessment is requested. Routine completion checks stay in the current project Skill; status questions use relevant facts directly.
+description: Use when a bounded feasibility experiment, human business-module acceptance, independent review, integration, performance, AI, UX, or accessibility evaluation is needed or requested. Routine regression checks stay in the current project Skill; status questions use relevant facts directly.
 ---
 
 # 项目验收与证据
@@ -8,6 +8,8 @@ description: Use when acceptance, independent code review, integration evaluatio
 审查和验收不授权修复、改断言或发布。普通任务内的回归和完成核对留在原主路由，单纯状态查询直接读取事实，不因此加载本 Skill。先确认检查命令的实际环境和外部副作用。
 
 以当前请求定义验收对象和比较目标。仓库中的其他 pending 实施计划只作背景；目标配置或基线不明时，列出精确缺口及只读补证动作，不把评测变成完成旧计划、申请提交推送或修复无关问题。
+
+按目的只读一个相关分支：验证关键假设的最小实验读[可行性判断与实验](references/feasibility-check.md)；业务模块完成/交付读[人工效果验收](references/business-acceptance.md)。前者回答有限条件下能否成立，后者由人确认业务是否可用，不能互相替代。普通审查和回归无需加载这两个分支。
 
 1. 按[审查清单](references/review-checklist.md)建立要求 → 实现 → 验证映射，界定任务候选、未提交及新增文件。
 2. 按风险执行实际测试/构建/集成/用户路径检查，用[证据格式](../../../.ai-workflow/templates/verification.md)绑定命令、时间、环境、退出码和提交或有限工作区指纹。

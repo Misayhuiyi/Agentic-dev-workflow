@@ -26,6 +26,8 @@ Lower layers never authorize commits, external writes, destructive operations, d
 | Dependency, runtime, CI, or toolchain change | `project-maintenance` |
 | Security review, trust boundary, auth, or secrets | `project-security` |
 | Acceptance, review, or evaluation | `project-verification` |
+| Authorized bounded experiment for a decision-critical feasibility assumption | `project-verification` → feasibility-check reference |
+| Business-module delivery and human review of actual effects | `project-verification` → business-acceptance reference |
 | Documentation truth or project documentation update | `maintaining-project-docs` |
 | Release readiness, migration, rollback, or authorized launch | `project-release` |
 | Production impact or active incident | `project-incident-response`, then authorized diagnosis/repair |
@@ -47,6 +49,14 @@ During kickoff, inspect the substance of existing requirements and sources, incl
 After consent, project-research owns the bounded investigation and reviewable recommendations. User acceptance is a separate gate from permission to research. Only accepted items, with source and approval references, enter the existing spec/plan or lightweight task; pending and rejected ideas do not become executable requirements. Research does not authorize implementation or external mutations. Use brainstorming or writing-plans only if remaining design choices or delivery complexity warrant them; do not turn research into a mandatory method chain.
 
 Persist useful evidence and review decisions only within document-write authority, preferably at existing project paths. Link them from the project context; retain task progress in its original state record. Read-only research returns a reviewable brief without writing files. Ordinary questions, clear local changes and already sufficient evidence do not require a research phase.
+
+## Feasibility and business acceptance
+
+These are conditional stages, not two more always-loaded Skills. If a critical assumption lacks current-environment evidence and failure would change the design or cause significant rework/cost, propose the smallest experiment with a hypothesis, representative inputs, success/failure criteria and time/cost limits. Information gaps may only need research; established low-risk patterns need ordinary tests, not a PoC. Reuse explicit experiment authorization; research permission alone does not authorize execution, spending or sensitive-data use. A probe's result is pass, fail or inconclusive within its tested scope, never automatic production readiness. Reuse an existing approved Spike contract rather than starting a second process.
+
+Define a business module by a usable user outcome, including small modules. Agree on scenarios, samples, expected effects and the human reviewer before substantial implementation, and demonstrate the smallest end-to-end flow early. Technical pass is not human acceptance. Submit an actionable review package for the precise candidate, then keep the original task active with human_acceptance=pending until the user/designated reviewer explicitly accepts. Rejection or unresolved conditions require follow-up; silence, design approval and Agent self-review are not acceptance. Internal micro-changes without business-effect changes may be not_required with a concrete reason, not a loophole based on task size.
+
+Store technical verification and human_acceptance separately in the same task record. Human acceptance binds its own candidate fingerprint and acceptance-criteria hash. Re-running tests does not refresh a human decision. Changed inputs/criteria require affected-item re-review; old records without human information remain unknown. Only current technical pass and current human acceptance (or genuinely inapplicable review) support done; pending work stays in the active index. Do not advance expensive dependent work or release on an unaccepted module; unrelated authorized tasks may continue. Completion, human acceptance and deployment authorization are separate.
 
 ## Recovery and handoff
 

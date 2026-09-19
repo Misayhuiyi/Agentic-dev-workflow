@@ -18,6 +18,7 @@ _SHA = re.compile(r"^[0-9a-f]{64}$")
 _HEAD = re.compile(r"^[0-9a-f]{40}$")
 _STATES = {"active", "blocked", "paused", "done"}
 _VERIFICATION = {"pass", "fail", "not_run", "stale"}
+_HUMAN_ACCEPTANCE = {"pending", "changes_requested", "accepted", "not_required"}
 
 
 @dataclass(frozen=True)
@@ -47,6 +48,7 @@ class TaskRecord:
     snapshot: dict[str, object]
     verification: dict[str, object]
     next_step: dict[str, str]
+    human_acceptance: dict[str, object] | None = None
 
 
 @dataclass(frozen=True)
@@ -186,9 +188,50 @@ def _hash_map(value: object, *, label: str) -> dict[str, str]:
     return result
 
 
+def _validate_fingerprint(fingerprint: object, related: tuple[str, ...], label: str) -> None:
+    if not isinstance(fingerprint, dict):
+        raise ValueError(f"{label} fingerprint is required")
+    fingerprint_kind = fingerprint.get("kind")
+    if fingerprint_kind == "git":
+        _exact(fingerprint, {"kind", "head", "files"}, "git fingerprint")
+        if not isinstance(fingerprint["head"], str) or not _HEAD.fullmatch(fingerprint["head"]):
+            raise ValueError("invalid fingerprint head")
+        samples = _hash_map(fingerprint["files"], label="fingerprint files")
+    elif fingerprint_kind == "files":
+        _exact(fingerprint, {"kind", "entries"}, "file fingerprint")
+        samples = _hash_map(fingerprint["entries"], label="fingerprint entries")
+    else:
+        raise ValueError("invalid fingerprint kind")
+    if set(samples) != set(related):
+        raise ValueError(f"{label} fingerprint must sample every related path exactly")
+
+
+def _parse_human_acceptance(value: object, related: tuple[str, ...]) -> dict[str, object]:
+    if not isinstance(value, dict):
+        raise ValueError("invalid human_acceptance")
+    _exact(value, {"status", "reason", "reviewer", "reviewed_at", "evidence", "fingerprint", "criteria_sha256"}, "human_acceptance")
+    if not isinstance(value["status"], str) or value["status"] not in _HUMAN_ACCEPTANCE:
+        raise ValueError("invalid human_acceptance status")
+    if not isinstance(value["reason"], str) or not value["reason"].strip():
+        raise ValueError("human_acceptance reason is required")
+    accepted = value["status"] == "accepted"
+    for key in ("reviewer", "reviewed_at", "evidence"):
+        field = value[key]
+        if (accepted and field is None) or (field is not None and (not isinstance(field, str) or not field.strip())):
+            raise ValueError(f"human_acceptance {key} must be a non-empty string" + ("" if accepted else " or null"))
+    criteria = value["criteria_sha256"]
+    if (accepted and criteria is None) or (criteria is not None and (not isinstance(criteria, str) or not _SHA.fullmatch(criteria))):
+        raise ValueError("invalid human_acceptance criteria_sha256")
+    if accepted or value["fingerprint"] is not None:
+        _validate_fingerprint(value["fingerprint"], related, "human_acceptance")
+    return value
+
+
 def parse_task_file(path: Path, root: Path) -> TaskRecord:
     payload = _machine_payload(Path(path), Path(root), "ai-workflow-task")
     fields = {"schema_version", "id", "state", "owner", "worktree", "baseline", "scope", "snapshot", "verification", "next_step"}
+    if "human_acceptance" in payload:
+        fields.add("human_acceptance")
     _exact(payload, fields, "task")
     if type(payload["schema_version"]) is not int or payload["schema_version"] != 1 or not isinstance(payload["id"], str) or not _ID.fullmatch(payload["id"]):
         raise ValueError("invalid task identity")
@@ -242,30 +285,15 @@ def parse_task_file(path: Path, root: Path) -> TaskRecord:
         if fingerprint is not None:
             raise ValueError("not_run verification cannot have a fingerprint")
     else:
-        if not isinstance(fingerprint, dict):
-            raise ValueError("verification fingerprint is required")
-        fingerprint_kind = fingerprint.get("kind")
-        if not isinstance(fingerprint_kind, str):
-            raise ValueError("invalid fingerprint kind")
-        if fingerprint_kind == "git":
-            _exact(fingerprint, {"kind", "head", "files"}, "git fingerprint")
-            if not isinstance(fingerprint["head"], str) or not _HEAD.fullmatch(fingerprint["head"]):
-                raise ValueError("invalid fingerprint head")
-            samples = _hash_map(fingerprint["files"], label="fingerprint files")
-        elif fingerprint_kind == "files":
-            _exact(fingerprint, {"kind", "entries"}, "file fingerprint")
-            samples = _hash_map(fingerprint["entries"], label="fingerprint entries")
-        else:
-            raise ValueError("invalid fingerprint kind")
-        if set(samples) != set(related):
-            raise ValueError("verification fingerprint must sample every related path exactly")
+        _validate_fingerprint(fingerprint, related, "verification")
+    human_acceptance = _parse_human_acceptance(payload["human_acceptance"], related) if "human_acceptance" in payload else None
     next_step = payload["next_step"]
     if not isinstance(next_step, dict):
         raise ValueError("invalid next_step")
     _exact(next_step, {"summary", "verify", "stop_condition"}, "next_step")
     if any(not isinstance(next_step[key], str) or not next_step[key].strip() for key in next_step):
         raise ValueError("next_step values are required")
-    return TaskRecord(Path(path), payload["id"], payload["state"], payload["owner"], worktree, baseline, {"related_paths": related, "excluded_paths": excluded}, snapshot, verification, next_step)
+    return TaskRecord(Path(path), payload["id"], payload["state"], payload["owner"], worktree, baseline, {"related_paths": related, "excluded_paths": excluded}, snapshot, verification, next_step, human_acceptance)
 
 
 def select_task(
@@ -331,6 +359,33 @@ def assess_freshness(root: Path, task: TaskRecord, git: GitSnapshot) -> Freshnes
         return Freshness("stale", ("verification_marked_stale",))
     if verification["status"] == "not_run" or fingerprint is None:
         return Freshness("unknown", ("verification_not_run",))
+    return _assess_fingerprint(root, task.scope["related_paths"], fingerprint, git)
+
+
+def criteria_sha256(task: TaskRecord) -> str:
+    """以规范化 UTF-8 JSON 对目标、验收条件和有序任务范围计算摘要。"""
+    criteria = {"goal": task.snapshot["goal"], "acceptance": task.snapshot["acceptance"], "scope": task.scope}
+    encoded = json.dumps(criteria, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def assess_human_acceptance(root: Path, task: TaskRecord, git: GitSnapshot) -> Freshness:
+    human = task.human_acceptance
+    if human is None:
+        return Freshness("unknown", ("human_acceptance_unrecorded",))
+    if human["criteria_sha256"] is None:
+        return Freshness("unknown", ("human_acceptance_criteria_unrecorded",))
+    if human["criteria_sha256"] != criteria_sha256(task):
+        return Freshness("stale", ("human_acceptance_criteria_changed",))
+    if human["status"] == "not_required":
+        return Freshness("fresh", ())
+    if human["fingerprint"] is None:
+        return Freshness("unknown", ("human_acceptance_candidate_unrecorded",))
+    # 技术检查重跑时，人工审阅过的候选仍保留独立指纹。
+    return _assess_fingerprint(root, task.scope["related_paths"], human["fingerprint"], git)
+
+
+def _assess_fingerprint(root: Path, related: tuple[str, ...], fingerprint: dict[str, object], git: GitSnapshot) -> Freshness:
     reasons: list[str] = []
     if fingerprint["kind"] == "git":
         if not git.available or git.head is None:
@@ -341,7 +396,7 @@ def assess_freshness(root: Path, task: TaskRecord, git: GitSnapshot) -> Freshnes
     else:
         expected = fingerprint["entries"]
     unknown: list[str] = []
-    for relative in task.scope["related_paths"]:
+    for relative in related:
         actual, problem = _sample(Path(root), relative)
         if problem:
             unknown.append(problem)

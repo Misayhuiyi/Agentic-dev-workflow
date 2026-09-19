@@ -9,12 +9,14 @@ It addresses *how to work with AI on development continuously and methodically*.
 - For ordinary conversation, knowledge questions, and read-only explanations: answer directly, consulting only relevant files when project facts are needed.
 - For simple, well-defined, low-risk changes: use the matching lifecycle Skill to implement and verify, without automatically loading Superpowers methods.
 - When early requirements lack evidence needed for important decisions: explain the gaps, research after authorization, and have the user review each recommendation.
+- When a critical feasibility assumption lacks evidence from the current real environment: propose a minimal PoC/Spike when warranted and test it within existing authorization before costly implementation.
+- When delivering a business module or significant business flow: agree observable outcomes, samples, and a human reviewer first; technical verification still needs to be followed by human acceptance of the business result.
 - For complex work or work with unresolved choices: clarify the design first, then proceed in stages using a single plan.
 - When switching sessions or Agents: recover from project documentation, task state, and the actual workspace instead of relying on chat memory.
 - When the project root is cluttered: classify the contents and propose a move plan first; after approval, reorganize the directories, update references, and verify the result.
 - To control context: keep long-lived rules concise, and read Skill bodies and detailed references only when needed.
 
-Current template version: `2.1.0`. It includes **11 project lifecycle Skills and 14 Superpowers method Skills, for 25 Skills in total**, with 27 managed adapter entry points and no sample application code, acceptance-test sample projects, or build history.
+Current template version: `2.2.0`. It includes **11 project lifecycle Skills and 14 Superpowers method Skills, for 25 Skills in total**, with 27 managed adapter entry points and no sample application code, acceptance-test sample projects, or build history. Feasibility experiments and human business acceptance reuse `project-verification`; no Skill is added.
 
 ## 1. Get started in three minutes
 
@@ -28,6 +30,7 @@ Current template version: `2.1.0`. It includes **11 project lifecycle Skills and
 First read AGENTS.md and use the in-project Skills as needed.
 I want to build: [the goal and intended users].
 First verifiable result: [one end-to-end business flow that can actually be demonstrated].
+Business outcome and acceptance: [representative sanitized samples, observable expected results, and human reviewer; ask when unknown].
 Constraints: [tech stack, runtime environment, data permissions, timeline, and so on; check unknowns read-only first and explain any gaps that need external research].
 Please start with project-kickoff, clarify the boundaries first, and do not set up infrastructure that is not yet needed.
 ```
@@ -67,7 +70,9 @@ project-root/
 │   ├── ROUTING.md               Selection rules for lifecycle and method Skills
 │   ├── superpowers-compat.md    How Superpowers fits this project's permissions and graduated workflow
 │   ├── templates/               Templates for project context, research, tasks, designs, and verification
-│   │   └── research-brief.md    Use when research needs a persistent record; no research directory is created automatically
+│   │   ├── research-brief.md    Use when research needs a persistent record
+│   │   ├── feasibility-check.md Record a minimal experiment's question, boundaries, and actual evidence as needed
+│   │   └── business-acceptance.md Record business acceptance criteria, demonstration evidence, and human decisions
 │   ├── scripts/                 Two day-to-day helper commands and three internal dependency modules
 │   ├── third_party/             Upstream licenses, versions, file checksums, and patch records
 │   ├── VERSION                  Workflow version
@@ -81,6 +86,8 @@ project-root/
 ```
 
 There are no pre-created `src/` or `apps/` directories, databases, containers, or CI configurations. Those should be determined by the actual product and technology stack. Skill subdirectories such as `references/` and `scripts/` exist only where they have a real purpose; required upstream resources are not sample application code.
+
+Research, experiment, and business acceptance records are also created only when needed; the initial package does not create empty product directories. The [feasibility-check.md](.agents/skills/project-verification/references/feasibility-check.md) and [business-acceptance.md](.agents/skills/project-verification/references/business-acceptance.md) references under `project-verification/references/` provide execution guidance; the templates hold actual records.
 
 Some optional Superpowers helpers require Git, Node.js, Bash, or host support for multiple agents or a browser. Check these only when needed; you do not have to install everything up front. Do not run Bash scripts as if they were PowerShell commands. When a capability is unavailable, use a supported serial or manual-check approach and state what was not run.
 
@@ -99,7 +106,7 @@ Usually, you can simply describe what you need and let the Agent choose an entry
 | Resume a task, switch sessions, pause, or hand off work | `project-continuity` |
 | Organize scattered files or restructure directories | `project-organization` |
 | Maintain dependencies, runtimes, or toolchains | `project-maintenance` |
-| Perform acceptance testing, code review, or performance, AI, or UX evaluation | `project-verification` |
+| Run a minimal feasibility experiment, technical or human business acceptance, code review, or performance, AI, or UX evaluation | `project-verification` |
 | Review security, identity, authorization, or tenant boundaries | `project-security` |
 | Maintain project facts, usage instructions, or documentation | `maintaining-project-docs` |
 | Prepare a release, migration, or rollback | `project-release` |
@@ -125,6 +132,35 @@ Add only R-01 to the existing spec/plan and acceptance criteria, retaining sourc
 ```
 
 Only accepted items may enter the existing authoritative spec/plan and acceptance criteria; rejected and pending items stay in the research record. Small research tasks can be completed in a table in the response. When a persistent record is needed, use [research-brief.md](.ai-workflow/templates/research-brief.md) at the project's existing location, or create `docs/research/<topic>.md` as needed. Keep only a link in the project facts entry point. Do not require a new directory or a second plan, and do not treat candidate recommendations as approved requirements in a later session.
+
+### Test critical assumptions with a minimal experiment
+
+The Agent judges whether a PoC/Spike is warranted by risk: propose the smallest experiment that answers a critical assumption when it lacks evidence from the current real environment and failure could change the approach, cause substantial rework, or incur significant cost. Use `project-research` first when the gap is missing information. Mature, low-risk reuse usually needs no PoC, and a routine test alone does not warrant an experiment workflow.
+
+```text
+Use project-verification to check whether the existing offline retrieval approach can handle our representative sanitized documents.
+Inspect the current evidence first; if a critical assumption remains unverified, define a minimal PoC.
+State the question, samples and environment, pass/fail criteria, time and cost limits, and stopping conditions.
+Execute within the authorized local scope. Identify any additional authorization needed for external code execution, paid services, or a wider scope.
+Report pass, fail, or insufficient evidence from actual results, then explain the impact on the existing design/plan.
+```
+
+An experiment proposal or inference from documentation cannot replace an actual execution result. Preserve the environment, samples, operations, and evidence; report failures and insufficient evidence honestly. A prototype is not automatically a production implementation. Research authorization does not authorize running external code or paid calls; explicit authorization already covering the same experiment scope needs no repeated approval. Use [feasibility-check.md](.ai-workflow/templates/feasibility-check.md) when a persistent record is needed, linking the existing task and single design/plan instead of creating another implementation plan.
+
+### Require human acceptance before completing a business module
+
+A business module is defined by a result a user can accomplish, so small modules also require acceptance. Internal adjustments or small copy edits may be exempt, but line counts cannot exempt changes to business outcomes. Before implementation, agree the business goal, representative sanitized samples, observable expected outcomes, and human reviewer; ask about unknowns instead of inventing them. Demonstrate a minimal end-to-end flow early to catch misunderstandings.
+
+```text
+Implement the expense-report bulk import module. First agree the business goal, representative sanitized samples, expected outcomes, and human reviewer with me.
+Demonstrate a minimal flow from importing one sample batch to checking its results, then complete the agreed scope.
+After technical verification passes, provide the candidate version, entry point and steps, expected versus actual results, evidence, limitations, and items for my confirmation.
+Until I explicitly accept it, mark it as technically complete and awaiting human acceptance; do not mark the whole module complete.
+```
+
+Silence does not mean acceptance. A rejection, or conditional acceptance with outstanding conditions, remains returned or pending. Until a human explicitly accepts the result, do not automatically start costly steps or releases that depend on it; independent, already authorized work may continue. Fixes already authorized within the original task may proceed; requirement or scope changes still need confirmation. Relevant implementation or acceptance-criteria changes require review of the old acceptance, without restarting the entire process for every small function.
+
+Use [business-acceptance.md](.ai-workflow/templates/business-acceptance.md) as needed to retain criteria, demonstration evidence, and human decisions; dynamic status stays in the original task record. Technical tests establish the technical behavior checked, while human acceptance confirms the business result. Neither substitutes for the other.
 
 ### Small changes
 
@@ -166,8 +202,10 @@ See [docs/README.md](docs/README.md) for the full conventions. Use the project's
 | Product README | Project purpose, startup instructions, and documentation entry points | Maintain it after kickoff; do not let the template guide remain the permanent product homepage |
 | `docs/project-context.md` | Current capabilities, tech stack, real commands, module map, milestones, and known limitations | On first integration and when project-level facts change; keep it concise |
 | `docs/tasks/index.md` | Active task IDs, owners, worktrees, and links to task files | When there are active tasks that need ongoing tracking |
-| `docs/tasks/<ID>.md` | Goal, completed work, verification, risks, and next step | For cross-session or unfinished work; this is the source of truth for dynamic state |
+| `docs/tasks/<ID>.md` | Goal, completed work, technical verification, human acceptance state, risks, and next step | For cross-session or unfinished work; this is the source of truth for dynamic state |
 | `docs/research/<topic>.md` | Research questions, sources, recommendation IDs, accepted/rejected/pending decisions, and where accepted items were incorporated | For authorized research that needs a persistent record; prefer existing paths, and keep small research tasks in the response when sufficient |
+| Existing experiment location + `feasibility-check.md` template | Experiment question, samples/environment, criteria, resource limits, actual results, and evidence | When a critical assumption needs a minimal experiment and a persistent record; do not create empty directories |
+| Existing acceptance location + `business-acceptance.md` template | Business goal, criteria, candidate version, demonstration material, human decision, and its basis | For delivery of a business module or significant flow; link the original task without duplicating dynamic state |
 | `docs/specs/`, `docs/plans/` | Approved design and the single implementation plan | When a written design or complex sequence of steps is needed |
 | `docs/adr/` | Long-lived architecture decisions, their reasoning, and successor decisions | For important decisions, not routine activity logs |
 | `docs/iterations/` | Historical summaries, verification, and remaining items from significant iterations | When an iteration result is worth preserving |
@@ -195,17 +233,26 @@ Summarize the goal, completed work, uncommitted contents, verification, risks, a
 
 The JSON on the first line of the task file is the only structured state. The human-readable snapshot below it is generated by a script. They are not two separately maintained progress records. The script is read-only and does not write changes back automatically: ask the Agent to update the marked region within the authorized scope while preserving manually written background and evidence notes.
 
+Version `2.2.0` adds optional `human_acceptance` to the existing task state, separating human business acceptance from technical verification. Older records without it remain readable, but their human acceptance is `unknown`, not a business pass. Keep the task `active` while awaiting human acceptance. The verification item in the six-item snapshot shows both technical and human status.
+
+An accepted record needs the reviewer, decision basis, timestamp, and independent fingerprints for the candidate version and acceptance criteria. Relevant code or criteria changes make the human acceptance evidence's freshness `stale`; rerunning technical tests does not renew human sign-off. A task that truly does not affect business outcomes may record `not_required`, but it needs a specific reason and the current `criteria_sha256` to remain `fresh`; a missing hash is `unknown`, and changed criteria make it `stale`. The script checks structure and fingerprints; it cannot authenticate a human sign-off or decide whether a business task should be exempt. Do not fabricate a reviewer's identity or consent. Follow [task-state.md](.ai-workflow/templates/task-state.md) for the exact fields.
+
 ```powershell
 # Windows PowerShell; run from the product project root and replace the task ID with the real one.
 py -3 -B .ai-workflow/scripts/project_status.py --root . --task TEXT-001
 py -3 -B .ai-workflow/scripts/project_status.py --root . --task TEXT-001 --format json --require-fresh
+py -3 -B .ai-workflow/scripts/project_status.py --root . --task TEXT-001 --require-complete --format json
 py -3 -B .ai-workflow/scripts/project_status.py --root . --task TEXT-001 --format markdown
 py -3 -B .ai-workflow/scripts/project_status.py --root . --task TEXT-001 --check-view
 ```
 
+Read the current criteria hash from `snapshot.human_acceptance.current_criteria_sha256` in the JSON output. It binds the task's `goal`, `acceptance`, and `scope`. Follow [task-state.md](.ai-workflow/templates/task-state.md): copy it into `human_acceptance.criteria_sha256` only after genuine acceptance of the current candidate or an actual determination that acceptance is not required. Reading the hash does not establish human consent.
+
 On macOS or Linux, replace `py -3 -B` with `python3 -B`. The script uses only the Python 3.10+ standard library. Version `2.0.0` was tested on Windows with Python 3.11.9; other systems need verification in their own projects.
 
 If no task record exists, create a real record from the template first; do not fabricate a snapshot. When several tasks exist, do not guess based on the “latest date.” After relevant files change, old verification becomes stale or unknown and cannot continue to be treated as passing. A missing or stale view makes `--check-view` return 1; a structural error returns 2. If Python is unavailable, manually check the same six items and state that they were not automatically verified.
+
+`--require-fresh` checks technical verification freshness only; it does not establish a technical pass or business acceptance. Use `--require-complete` for the completion gate: the task must be `done`, technical verification must be `pass` and `fresh` with nonblank `command` and result `evidence`, and human acceptance must be either `accepted` and `fresh` or `not_required` with a specific reason, the current `criteria_sha256`, and `fresh` evidence. For non-command checks, record actual inspection steps in `command`; the script does not execute or authenticate these records. Unmet conditions return 1; structural errors return 2. Retain the actual pending state until an explicit human decision is received; do not mark work complete merely to pass the check.
 
 `--task <ID>` selects from the active index. For a completed task removed from that index, provide its exact file path; the tool does not scan all history:
 
@@ -294,7 +341,11 @@ py -3 -B .ai-workflow/scripts/sync_adapters.py --root . --allow-extra-skills --c
 
 ## 11. Verification scope and what this template cannot guarantee
 
-Limited `2.1.0` verification ran within the current session host, without the Codex CLI. Before/after trials of the same document-only project showed the revised route asking whether to research before browsing or selecting design methods. Five read-only scenarios covered declined research, ordinary explanation, sufficient small-project requirements, research restricted to supplied material, and explaining partial adoption. A separate live trial consulted two public GitHub candidates and official sources, producing a sourced brief with pending recommendations outside the template; candidate code was neither installed nor run. All 25 Skills passed format checks; the development workspace passed 12 adapter tests and 9 provenance tests, and the delivery's 27 adapters and 60 third-party file hashes were consistent. These are limited behavioral examples and static/script checks, not guarantees across all models, tools, or business projects.
+Limited `2.2.0` verification ran in the current session host without the Codex CLI. On Windows / Python 3.11.9, the delivery scripts passed 18 new acceptance regressions and 32 existing state regressions, covering pending and rejected review, stale decisions, missing technical proof, legacy records, and six-item views. The development copy passed 12 adapter and 9 provenance tests; the delivery passed format checks for 25 Skills, consistency checks for 27 adapters, and 60 third-party file hashes. A real bounded experiment on Windows / Python 3.13.9 confirmed that two Markdown files with Chinese characters and spaces in their names retained paths and bytes through a ZIP round trip; it used only `project-verification`, with no Superpowers method. Five additional read-only scenarios distinguished pending acceptance, explicit rejection, a typo edit, uncertain OCR feasibility, and an established logging change. Those scenarios were not actual business acceptance.
+
+The read-only baseline under the old rules already distinguished technical success from human acceptance; it would be incorrect to claim that judgment failed. This release makes the requirement explicit in reusable procedures, persistent state, and script gates. New script assertions failed against the old implementation before turning green. All human approvals in tests were fixtures or scenario assumptions, not your acceptance of this template; actual business effects still need human review.
+
+Historical limited `2.1.0` verification ran within the session host at the time, without the Codex CLI. Before/after trials of the same document-only project showed the revised route asking whether to research before browsing or selecting design methods. Five read-only scenarios covered declined research, ordinary explanation, sufficient small-project requirements, research restricted to supplied material, and explaining partial adoption. A separate live trial consulted two public GitHub candidates and official sources, producing a sourced brief with pending recommendations outside the template; candidate code was neither installed nor run. All 25 Skills passed format checks; the development workspace passed 12 adapter tests and 9 provenance tests, and the delivery's 27 adapters and 60 third-party file hashes were consistent. These are limited behavioral examples and static/script checks, not guarantees across all models, tools, or business projects, and cannot count as `2.2.0` verification results.
 
 That live research trial then received a predefined simulated review: one recommendation rejected, one pending, and one conditionally accepted. Only the existing research record and single plan were updated. The accepted portion gained tasks and acceptance criteria; excluded items did not become implementation tasks. No code, dependencies, or CI files changed. This checks approval-to-document behavior for that trial, not completion of its sample product.
 

@@ -22,11 +22,11 @@
     },
     ".claude/skills/project-continuity/SKILL.md": {
       "sha256": "5eb98e63b2048abc33ebb37dba6755aadbd3dafefbce750cb52ff08fe94b6085",
-      "source_fingerprint": "da7755a3e310ec9c9623a9fd1fd2dffdae86c81baddb5dc31d97857a3eeeacd6"
+      "source_fingerprint": "7ba1f457f6bc93c5711c7b68c5e245c849c46e93174e1db95a08976fea008895"
     },
     ".claude/skills/project-development/SKILL.md": {
       "sha256": "0dd6719c26e444b989118ba862db6bd703224c98ad847d348b3060aa80013c23",
-      "source_fingerprint": "b3bddef40f6b22469178daf0e924e355e7f9facd44ca10cb4781b976debf429e"
+      "source_fingerprint": "afe4e0fa67aba87e7e4afa51e870f24c857ff9d82fc3e6ac2e3508e4d047a9f2"
     },
     ".claude/skills/project-incident-response/SKILL.md": {
       "sha256": "0dab65c1bfa5244fe206d31dda8274110cf006b6e30d57e095ab8afca6c079f2",
@@ -34,7 +34,7 @@
     },
     ".claude/skills/project-kickoff/SKILL.md": {
       "sha256": "8811a67a1102de300467be26225d64e3b62d70c3fc084ffab98752818c41917e",
-      "source_fingerprint": "5c13e7cf606e87aa0b75725e4e8d8024a09c5712e27f35ae86c221b47aa617ed"
+      "source_fingerprint": "d9e438814d2b6f346f8b670cf351a8b9d9786b237ecfced5076ee97d0db75c0e"
     },
     ".claude/skills/project-maintenance/SKILL.md": {
       "sha256": "19aa04fa10c35b74c28c9bf35ca9cb4a8e53a88ee0758a8c42cd289b1e99cdb6",
@@ -46,19 +46,19 @@
     },
     ".claude/skills/project-release/SKILL.md": {
       "sha256": "13d7d12e2209d8cf06d2024c308c0cd0c74cb7723a2b97e7d47ed4e4fa2daa5b",
-      "source_fingerprint": "18377fa513cbb05df59c5c9d273337b4e896f8b8a5964ce1300727df72ed8aef"
+      "source_fingerprint": "7d328cbe8b53be7917b408ab91883fb1f019b6052060a3a57963dd926b2706b9"
     },
     ".claude/skills/project-research/SKILL.md": {
       "sha256": "8e30628c8655fd1911b142541711fa3038df36abc7e1391fc59e5a14211d2443",
-      "source_fingerprint": "d92c5d1ae7325d4d0d777e32a812f5fb172486c5935fd67bec394ca8784033d5"
+      "source_fingerprint": "85043342d345eeab7610b64c4d8b2a71affd468f9e1072b4a240efb202855cef"
     },
     ".claude/skills/project-security/SKILL.md": {
       "sha256": "62b961798d38e1adb7de03d10b1a8b9361274628bdbac285b4c600bf40465d0a",
       "source_fingerprint": "43b1a47b27176de844a391eaebdd1ab272bed01fb3449c792852ecdb09f675fc"
     },
     ".claude/skills/project-verification/SKILL.md": {
-      "sha256": "6a29fa6583819663013270b74e992fb76481f5523611114f76b1212e6fe1ee5f",
-      "source_fingerprint": "a7bc7994d268e4c55421f71b6c9430d63eb5b3ecca7a624528c5caaacab7d2fb"
+      "sha256": "7bf306ed0b29adada21f3ed91ccb0e212c5f0cdbbcea90da97648830e0d845fb",
+      "source_fingerprint": "db07e57aef52816df5afdf624512d22da06898d704acbc5a4d53317b8329edfd"
     },
     ".claude/skills/receiving-code-review/SKILL.md": {
       "sha256": "8981b137b56a3c89f5690c9a72dd8101ac410584f61204ad6780a74d9b16c12d",
@@ -102,11 +102,11 @@
     },
     "CLAUDE.md": {
       "sha256": "4591f8c6c2b09ecb1db65bd76ad1a6fd909088fc162b23d0d41384bb0720c2ef",
-      "source_fingerprint": "1253a7baf4684d03bf1eb00099d1f7e3d1120c5ef2cfc2875d3af8ad7fdcbf5f"
+      "source_fingerprint": "ec09e9969f1a8d4e3497b8d74e06995985f1fedeb4e3958aad06b6388da2ad19"
     },
     "GEMINI.md": {
       "sha256": "a6ee56b93e24da780ddf9f6c2aea0acade4f78a7962c21656d0a95e76a735576",
-      "source_fingerprint": "1253a7baf4684d03bf1eb00099d1f7e3d1120c5ef2cfc2875d3af8ad7fdcbf5f"
+      "source_fingerprint": "ec09e9969f1a8d4e3497b8d74e06995985f1fedeb4e3958aad06b6388da2ad19"
     }
   },
   "schema_version": 1

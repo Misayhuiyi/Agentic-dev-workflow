@@ -16,7 +16,7 @@ from pathlib import Path
 if __name__ == "__main__":
     sys.dont_write_bytecode = True
 
-from _taskstate import GitSnapshot, assess_freshness, parse_task_file, parse_task_index, resolve_task_path, select_task
+from _taskstate import GitSnapshot, assess_freshness, assess_human_acceptance, criteria_sha256, parse_task_file, parse_task_index, resolve_task_path, select_task
 
 
 VIEW_START = "<!-- ai-workflow-project-status:start -->"
@@ -172,7 +172,8 @@ def _base_result(root_selection: str, git: GitSnapshot, args: argparse.Namespace
             "candidates": [],
         },
         "freshness": {"status": "unknown", "reasons": ["no_task_selected"]},
-        "snapshot": {"goal": None, "completed": [], "uncommitted": list(git.dirty_paths), "verification": None, "risks": [], "next_step": None},
+        "completion": {"complete": False, "reasons": ["no_task_selected"]},
+        "snapshot": {"state": None, "goal": None, "completed": [], "uncommitted": list(git.dirty_paths), "verification": None, "human_acceptance": None, "risks": [], "next_step": None},
         "warnings": [],
         "errors": [],
     }
@@ -228,9 +229,36 @@ def inspect_status(root: Path, args: argparse.Namespace, root_selection: str = "
         if (task.id, task.state, task.owner, task.worktree) != (entry.id, entry.state, entry.owner, entry.worktree):
             raise ValueError("task index and task file disagree")
     freshness = assess_freshness(root, task, git)
+    human_freshness = assess_human_acceptance(root, task, git)
+    human = task.human_acceptance or {
+        "status": "unrecorded", "reason": "未记录人工效果验收", "reviewer": None,
+        "reviewed_at": None, "evidence": None, "criteria_sha256": None,
+    }
+    completion_reasons = []
+    if task.state != "done":
+        completion_reasons.append("task_state_not_done")
+    if task.verification["status"] != "pass":
+        completion_reasons.append(f"technical_verification_{task.verification['status']}")
+    if freshness.status != "fresh":
+        completion_reasons.append(f"technical_verification_{freshness.status}")
+    # 兼容读取旧记录；仅完成门槛要求可追溯的技术检查步骤和证据。
+    for field in ("command", "evidence"):
+        value = task.verification[field]
+        if not isinstance(value, str) or not value.strip():
+            completion_reasons.append(f"technical_verification_{field}_missing")
+    if human["status"] not in {"accepted", "not_required"}:
+        completion_reasons.append(f"human_acceptance_{human['status']}")
+    if human_freshness.status != "fresh":
+        completion_reasons.append(f"human_acceptance_{human_freshness.status}")
+    result["completion"] = {"complete": not completion_reasons, "reasons": completion_reasons}
+    risks = list(task.snapshot["risks"])
+    if task.state == "done" and completion_reasons:
+        result["warnings"].append("task_marked_done_but_incomplete:" + ",".join(completion_reasons))
+        risks.append("记录为 done，但完成条件未满足：" + "；".join(completion_reasons))
     selection_json["selected_id"] = task.id
     result["freshness"] = {"status": freshness.status, "reasons": list(freshness.reasons)}
     result["snapshot"] = {
+        "state": task.state,
         "goal": task.snapshot["goal"],
         "completed": list(task.snapshot["completed"]),
         "uncommitted": list(git.dirty_paths),
@@ -240,7 +268,13 @@ def inspect_status(root: Path, args: argparse.Namespace, root_selection: str = "
             "evidence": task.verification["evidence"],
             "freshness": freshness.status,
         },
-        "risks": list(task.snapshot["risks"]),
+        "human_acceptance": {
+            **{key: human[key] for key in ("status", "reason", "reviewer", "reviewed_at", "evidence", "criteria_sha256")},
+            "freshness": human_freshness.status,
+            "reasons": list(human_freshness.reasons),
+            "current_criteria_sha256": criteria_sha256(task),
+        },
+        "risks": risks,
         "next_step": dict(task.next_step),
     }
     return result
@@ -297,12 +331,27 @@ def _next_text(result: dict[str, object]) -> str:
     return f"先明确 {choice}；检查：重新运行并确认唯一任务；停止条件：仍未选定唯一任务"
 
 
+def _human_text(snapshot: dict[str, object]) -> str:
+    human = snapshot["human_acceptance"]
+    if not isinstance(human, dict):
+        return "人工：未知（未选择任务）"
+    reasons = "；".join(human["reasons"]) or "无"
+    summary = (
+        f"人工：{human['status']} ({human['freshness']})；说明：{human['reason']}；"
+        f"新鲜度原因：{reasons}；验收人：{human['reviewer'] or '未记录'}；"
+        f"验收时间：{human['reviewed_at'] or '未记录'}；人工证据：{human['evidence'] or '未记录'}；"
+        f"记录准则 SHA256：{human['criteria_sha256'] or '未记录'}；"
+        f"当前准则 SHA256：{human['current_criteria_sha256']}"
+    )
+    return " ".join(summary.split())
+
+
 def _text(result: dict[str, object]) -> str:
     snapshot = result["snapshot"]
     assert isinstance(snapshot, dict)
     verification = snapshot["verification"]
     if isinstance(verification, dict):
-        verification_text = f"{verification['status']} ({verification['freshness']})"
+        verification_text = f"任务状态：{snapshot['state']}；技术：{verification['status']} ({verification['freshness']})；{_human_text(snapshot)}"
     else:
         verification_text = f"未知（{_selection_note(result)}）"
     selected = result["task_selection"]["selected_id"] is not None
@@ -346,9 +395,9 @@ def _markdown(result: dict[str, object], root: Path) -> str:
         reasons = freshness["reasons"]
         reason_text = "；".join(str(item) for item in reasons) if isinstance(reasons, list) and reasons else "无"
         verification_text = (
-            f"状态：{verification['status']}；新鲜度：{verification['freshness']}；"
+            f"任务状态：{snapshot['state']}；技术状态：{verification['status']}；新鲜度：{verification['freshness']}；"
             f"原因：{reason_text}；命令：{verification['command'] if verification['command'] is not None else '未记录'}；"
-            f"证据：{verification['evidence'] if verification['evidence'] is not None else '未记录'}"
+            f"证据：{verification['evidence'] if verification['evidence'] is not None else '未记录'}；{_human_text(snapshot)}"
         )
     else:
         reasons = freshness["reasons"]
@@ -440,6 +489,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--worktree")
     parser.add_argument("--format", choices=("text", "json", "markdown"), default="text")
     parser.add_argument("--require-fresh", action="store_true")
+    parser.add_argument("--require-complete", action="store_true", help="Require done, current passing technical checks, and current human acceptance or a bound not_required record")
     parser.add_argument("--check-view", action="store_true")
     return parser
 
@@ -489,6 +539,8 @@ def main(argv: list[str] | None = None) -> int:
     task_status = result["task_selection"]["status"]
     freshness = result["freshness"]["status"]
     if args.require_fresh and (task_status in {"ambiguous", "not_found", "none"} or freshness in {"stale", "unknown"}):
+        return 1
+    if args.require_complete and not result["completion"]["complete"]:
         return 1
     return 0
 
