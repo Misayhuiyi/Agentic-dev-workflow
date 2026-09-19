@@ -25,7 +25,7 @@ METHOD_SKILLS = {
 LIFECYCLE_SKILLS = {
     "project-kickoff", "project-organization", "project-development", "project-continuity", "project-maintenance",
     "project-verification", "project-security", "maintaining-project-docs", "project-release",
-    "project-incident-response",
+    "project-incident-response", "project-research",
 }
 REQUIRED_SKILLS = METHOD_SKILLS | LIFECYCLE_SKILLS
 LOCK_PATH = ".ai-workflow/ADAPTERS.lock.json"

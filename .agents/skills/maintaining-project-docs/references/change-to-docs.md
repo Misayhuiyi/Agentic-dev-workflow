@@ -9,6 +9,7 @@
 | 接口、事件、字段和错误语义 | 实际 code-first 或 spec-first 契约源，再按真实流程生成 |
 | 架构、数据流 | 当前架构说明；长期决定另记 ADR |
 | 需求和实施步骤 | 原 spec/plan，保留批准状态，不另造同义计划 |
+| 需求调研证据、候选建议和审核决定 | 原调研记录；无约定时 docs/research/，已接受项链接唯一 spec/plan，待定/拒绝项不进入执行清单 |
 | 重要迭代和效果实验 | 原迭代记录或 docs/iterations/；关闭后作为历史快照，未完成项链接活动任务 |
 | 任务进度、阻塞、验证与恢复/交接 | 原 docs/tasks/<task-id>.md 的唯一 JSON 状态；人类视图由 project_status.py 生成，交 continuity |
 | 活动任务增减、负责人或工作树变更 | 整合者更新 docs/tasks/index.md 的指针，不复制进度 |

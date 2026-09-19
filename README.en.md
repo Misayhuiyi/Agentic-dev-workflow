@@ -8,12 +8,13 @@ It addresses *how to work with AI on development continuously and methodically*.
 
 - For ordinary conversation, knowledge questions, and read-only explanations: answer directly, consulting only relevant files when project facts are needed.
 - For simple, well-defined, low-risk changes: use the matching lifecycle Skill to implement and verify, without automatically loading Superpowers methods.
+- When early requirements lack evidence needed for important decisions: explain the gaps, research after authorization, and have the user review each recommendation.
 - For complex work or work with unresolved choices: clarify the design first, then proceed in stages using a single plan.
 - When switching sessions or Agents: recover from project documentation, task state, and the actual workspace instead of relying on chat memory.
 - When the project root is cluttered: classify the contents and propose a move plan first; after approval, reorganize the directories, update references, and verify the result.
 - To control context: keep long-lived rules concise, and read Skill bodies and detailed references only when needed.
 
-Current template version: `2.0.1`. It includes **10 project lifecycle Skills and 14 Superpowers method Skills**, with no sample application code, acceptance-test sample projects, or build history.
+Current template version: `2.1.0`. It includes **11 project lifecycle Skills and 14 Superpowers method Skills, for 25 Skills in total**, with 27 managed adapter entry points and no sample application code, acceptance-test sample projects, or build history.
 
 ## 1. Get started in three minutes
 
@@ -27,11 +28,13 @@ Current template version: `2.0.1`. It includes **10 project lifecycle Skills and
 First read AGENTS.md and use the in-project Skills as needed.
 I want to build: [the goal and intended users].
 First verifiable result: [one end-to-end business flow that can actually be demonstrated].
-Constraints: [tech stack, runtime environment, data permissions, timeline, and so on; investigate any unknowns first].
+Constraints: [tech stack, runtime environment, data permissions, timeline, and so on; check unknowns read-only first and explain any gaps that need external research].
 Please start with project-kickoff, clarify the boundaries first, and do not set up infrastructure that is not yet needed.
 ```
 
-On first use, you can ask the Agent to perform a read-only check: where the project rules are, whether it can discover the 24 local Skills, and whether any global Skill with the same name or higher-level rule conflicts with them. **Discovering a name does not mean the Skill has already been run or verified.**
+On first use, you can ask the Agent to perform a read-only check: where the project rules are, whether it can discover the 25 local Skills, and whether any global Skill with the same name or higher-level rule conflicts with them. **Discovering a name does not mean the Skill has already been run or verified.**
+
+Kickoff starts by inspecting existing material read-only. If the project is still at the initial documentation stage or its requirements have weak supporting evidence, and a gap affects goals, feasibility, or an important design choice, the Agent explains the gap and asks whether to research it. A missing `docs/research/` directory alone is not a trigger; sufficient existing material, clear small tasks, and ordinary conversation do not need an added research step. An explicit research request already authorizes that scope and needs no repeated approval. If research is declined or the question is unanswered, the Agent does not browse externally or write research files without authorization.
 
 ### Existing project
 
@@ -55,7 +58,7 @@ project-root/
 ├── GEMINI.md                    Lightweight rule entry point for Gemini
 ├── .gitignore                   Ignore rules for caches, temporary files, and common local environment files
 ├── .gitattributes               Git conventions for cross-platform text and workflow fingerprints
-├── .agents/skills/              Single source of truth for the 24 complete Skills
+├── .agents/skills/              Single source of truth for the 25 complete Skills
 │   └── <skill-name>/
 │       ├── SKILL.md             Trigger conditions and required steps
 │       └── references/…         Detailed references or helper resources needed by only some Skills
@@ -63,7 +66,8 @@ project-root/
 ├── .ai-workflow/
 │   ├── ROUTING.md               Selection rules for lifecycle and method Skills
 │   ├── superpowers-compat.md    How Superpowers fits this project's permissions and graduated workflow
-│   ├── templates/               Templates for project context, tasks, designs, verification, and other documents
+│   ├── templates/               Templates for project context, research, tasks, designs, and verification
+│   │   └── research-brief.md    Use when research needs a persistent record; no research directory is created automatically
 │   ├── scripts/                 Two day-to-day helper commands and three internal dependency modules
 │   ├── third_party/             Upstream licenses, versions, file checksums, and patch records
 │   ├── VERSION                  Workflow version
@@ -90,6 +94,7 @@ Usually, you can simply describe what you need and let the Agent choose an entry
 | --- | --- |
 | Have an ordinary conversation, ask a knowledge question, or request a read-only explanation or status | Answer directly; read relevant files for project facts, without automatically loading method Skills |
 | Start a project from scratch or integrate the workflow into an existing project for the first time | `project-kickoff` |
+| Conduct explicitly requested or approved project research and compare evidence for options | `project-research` |
 | Build a feature, refactor, fix an ordinary non-production bug, or execute an approved plan | `project-development` |
 | Resume a task, switch sessions, pause, or hand off work | `project-continuity` |
 | Organize scattered files or restructure directories | `project-organization` |
@@ -99,6 +104,27 @@ Usually, you can simply describe what you need and let the Agent choose an entry
 | Maintain project facts, usage instructions, or documentation | `maintaining-project-docs` |
 | Prepare a release, migration, or rollback | `project-release` |
 | Respond to a production incident or active security impact | `project-incident-response` |
+
+### Research before deciding
+
+When evidence is missing, the sequence is: **read-only inventory → confirm research scope → research and compare → user reviews each item → accepted items enter the existing design/plan and acceptance criteria → continue within the original authorization**. An explicit research request already authorizes its scope. Research approval does not approve a technology choice, implementation, or external writes; subsequent actions still depend on the authorization already given.
+
+```text
+Use project-research to investigate whether offline document retrieval suits this project.
+Compare only offline availability, licensing, maintenance, and the cost of integrating with the existing Python service.
+Consult official material, relevant papers, and closely matching GitHub projects. Give me sources, recommendation IDs, and unsuitable uses for review first.
+```
+
+Research compares fit, maintenance, licensing, reuse cost, and unsuitable uses against the bounded questions; it does not copy projects based on star rankings. Each recommendation gets a stable ID, such as `R-01`, linked to traceable sources. Facts, inferences, and unverified claims are identified separately. If browsing is unavailable, state the limitation without claiming to have consulted sources.
+
+You can review the results with a response such as:
+
+```text
+Accept R-01, reject R-02, and leave R-03 pending.
+Add only R-01 to the existing spec/plan and acceptance criteria, retaining sources and review decisions. Do not implement it yet.
+```
+
+Only accepted items may enter the existing authoritative spec/plan and acceptance criteria; rejected and pending items stay in the research record. Small research tasks can be completed in a table in the response. When a persistent record is needed, use [research-brief.md](.ai-workflow/templates/research-brief.md) at the project's existing location, or create `docs/research/<topic>.md` as needed. Keep only a link in the project facts entry point. Do not require a new directory or a second plan, and do not treat candidate recommendations as approved requirements in a later session.
 
 ### Small changes
 
@@ -141,6 +167,7 @@ See [docs/README.md](docs/README.md) for the full conventions. Use the project's
 | `docs/project-context.md` | Current capabilities, tech stack, real commands, module map, milestones, and known limitations | On first integration and when project-level facts change; keep it concise |
 | `docs/tasks/index.md` | Active task IDs, owners, worktrees, and links to task files | When there are active tasks that need ongoing tracking |
 | `docs/tasks/<ID>.md` | Goal, completed work, verification, risks, and next step | For cross-session or unfinished work; this is the source of truth for dynamic state |
+| `docs/research/<topic>.md` | Research questions, sources, recommendation IDs, accepted/rejected/pending decisions, and where accepted items were incorporated | For authorized research that needs a persistent record; prefer existing paths, and keep small research tasks in the response when sufficient |
 | `docs/specs/`, `docs/plans/` | Approved design and the single implementation plan | When a written design or complex sequence of steps is needed |
 | `docs/adr/` | Long-lived architecture decisions, their reasoning, and successor decisions | For important decisions, not routine activity logs |
 | `docs/iterations/` | Historical summaries, verification, and remaining items from significant iterations | When an iteration result is worth preserving |
@@ -251,7 +278,7 @@ py -3 -B .ai-workflow/scripts/sync_adapters.py --root . --apply --json
 
 On POSIX systems, use `python3 -B` here as well. The script depends internally on `_skillmeta.py`, `_workflowlib.py`, and `ADAPTERS.lock.json`. Passing the adapter check proves only that generated files are consistent; it does not prove that any particular AI tool has successfully executed the workflow.
 
-After adding project-specific Skills, you can use `--allow-extra-skills`. It maintains entry points for only the 24 built-in Skills while preserving additional Skills, their proxies, and their lock records. Other tool entry points for additional Skills remain the project's responsibility; this option does not generate proxies for them automatically.
+After adding project-specific Skills, you can use `--allow-extra-skills`. It maintains entry points for only the 25 built-in Skills while preserving additional Skills, their proxies, and their lock records. Other tool entry points for additional Skills remain the project's responsibility; this option does not generate proxies for them automatically.
 
 ```powershell
 py -3 -B .ai-workflow/scripts/sync_adapters.py --root . --allow-extra-skills --check --json
@@ -267,9 +294,13 @@ py -3 -B .ai-workflow/scripts/sync_adapters.py --root . --allow-extra-skills --c
 
 ## 11. Verification scope and what this template cannot guarantee
 
-Targeted `2.0.1` verification in the current session host compared the same small feature under the old and revised rules. The old route read TDD, completion verification and method references; the revised route read only `AGENTS.md` and `project-development`, with 2/2 feature regression tests passing. A separate simple bug fix also loaded no Superpowers method, reproduced the failure before fixing it, and passed 3/3 tests. Five read-only routing scenarios covered conversation, Skill explanation, a small documentation edit, substantial design and production diagnosis; these are routing checks, not five end-to-end product tests. All 24 Skills passed UTF-8 format validation; the development workspace passed 11/11 adapter tests and 9/9 source-patch checks. The delivery's 26 adapters and 60 third-party files passed consistency checks. Billed tokens and other hosts' automatic discovery behavior were not measured.
+Limited `2.1.0` verification ran within the current session host, without the Codex CLI. Before/after trials of the same document-only project showed the revised route asking whether to research before browsing or selecting design methods. Five read-only scenarios covered declined research, ordinary explanation, sufficient small-project requirements, research restricted to supplied material, and explaining partial adoption. A separate live trial consulted two public GitHub candidates and official sources, producing a sourced brief with pending recommendations outside the template; candidate code was neither installed nor run. All 25 Skills passed format checks; the development workspace passed 12 adapter tests and 9 provenance tests, and the delivery's 27 adapters and 60 third-party file hashes were consistent. These are limited behavioral examples and static/script checks, not guarantees across all models, tools, or business projects.
 
-The following are historical, limited `2.0.0` scenarios run with native subtasks and real temporary projects within the current session host, without calling the Codex CLI. Independent subtasks do not inherit the parent chat history, but they still share host rules, tools, and discoverable Skill directories. This is not fully isolated, cross-product certification, and those historical results alone do not establish that the `2.0.1` trigger boundaries pass runtime verification.
+That live research trial then received a predefined simulated review: one recommendation rejected, one pending, and one conditionally accepted. Only the existing research record and single plan were updated. The accepted portion gained tasks and acceptance criteria; excluded items did not become implementation tasks. No code, dependencies, or CI files changed. This checks approval-to-document behavior for that trial, not completion of its sample product.
+
+Historical targeted `2.0.1` verification in the session host at the time compared the same small feature under the old and revised rules. The old route read TDD, completion verification and method references; the revised route read only `AGENTS.md` and `project-development`, with 2/2 feature regression tests passing. A separate simple bug fix also loaded no Superpowers method, reproduced the failure before fixing it, and passed 3/3 tests. Five read-only routing scenarios covered conversation, Skill explanation, a small documentation edit, substantial design and production diagnosis; these are routing checks, not five end-to-end product tests. All 24 Skills passed UTF-8 format validation; the development workspace passed 11/11 adapter tests and 9/9 source-patch checks. The delivery's 26 adapters and 60 third-party files passed consistency checks. Billed tokens and other hosts' automatic discovery behavior were not measured.
+
+The following are historical, limited `2.0.0` scenarios run with native subtasks and real temporary projects within the session host at the time, without calling the Codex CLI. Independent subtasks do not inherit the parent chat history, but they still share host rules, tools, and discoverable Skill directories. This is not fully isolated, cross-product certification, and those historical results alone do not establish that the `2.0.1` trigger boundaries pass runtime verification.
 
 Limited scenarios and independent rechecks on 2026-09-18 produced these results:
 

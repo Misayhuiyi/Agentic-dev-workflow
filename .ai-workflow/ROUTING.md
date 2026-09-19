@@ -19,6 +19,7 @@ Lower layers never authorize commits, external writes, destructive operations, d
 | --- | --- |
 | Conversation, knowledge question, read-only explanation or status lookup | Answer directly; inspect relevant facts if needed; no automatic lifecycle or method Skill |
 | New project or first repository onboarding | `project-kickoff` |
+| Explicitly requested requirements, feasibility or comparable-project research; or an accepted proposal to investigate an evidence gap | `project-research` |
 | Feature, refactor, or approved-plan execution | `project-development` |
 | Ordinary non-production bug or test failure | `project-development`; focused evidence gathering first; use `systematic-debugging` only if diagnosis remains unclear, recurs, spans components or is high risk |
 | Fix with evidence-confirmed root cause and clear authorized boundaries | `project-development`; low-risk local fixes use inline regression checks; nontrivial/high-risk fixes may select `test-driven-development` |
@@ -38,6 +39,14 @@ For actions or explicitly requested specialist work (review, diagnosis, acceptan
 Substantial work selects individual methods when their concrete triggers apply; it does not load the whole library. An explicit request to apply a named method also selects it. Merely discussing a Skill, beginning a conversation, or reading files does not. `using-superpowers` is optional help for method selection/integration troubleshooting, never a bootstrap. Nested `superpowers:<name>` references resolve to the project-local sibling Skill, not a global plugin, and remain conditional on stage relevance. Host-level requirements still apply; existing global/plugin metadata is independent and an already open session may retain its old catalog.
 
 Simple work needs no execution wrapper, parallel agent, separate formal acceptance route or iteration log. Formal acceptance, important independent review and cross-system evaluation use project-verification; ordinary verification stays within the current task. Never create a second spec or plan.
+
+## Research before design, when needed
+
+During kickoff, inspect the substance of existing requirements and sources, including document-only projects. If missing evidence affects a goal, feasibility or important design decision, describe the gap and proposed investigation, then ask whether the user wants research. A missing research directory or absent code is not a trigger. An explicit research request already supplies consent; a declined or unanswered proposal does not. Continue authorized work independent of the gap without repeatedly prompting.
+
+After consent, project-research owns the bounded investigation and reviewable recommendations. User acceptance is a separate gate from permission to research. Only accepted items, with source and approval references, enter the existing spec/plan or lightweight task; pending and rejected ideas do not become executable requirements. Research does not authorize implementation or external mutations. Use brainstorming or writing-plans only if remaining design choices or delivery complexity warrant them; do not turn research into a mandatory method chain.
+
+Persist useful evidence and review decisions only within document-write authority, preferably at existing project paths. Link them from the project context; retain task progress in its original state record. Read-only research returns a reviewable brief without writing files. Ordinary questions, clear local changes and already sufficient evidence do not require a research phase.
 
 ## Recovery and handoff
 
