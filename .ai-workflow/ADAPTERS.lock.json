@@ -102,11 +102,11 @@
     },
     "CLAUDE.md": {
       "sha256": "4591f8c6c2b09ecb1db65bd76ad1a6fd909088fc162b23d0d41384bb0720c2ef",
-      "source_fingerprint": "8bfc696cb6708220c0a73d7b88b1b63a15edf0c14efa6c85cb799a7ecce83d22"
+      "source_fingerprint": "90f340ed8c6d31d1943939ec175b694f550780575ddc68dc969e36542aedf005"
     },
     "GEMINI.md": {
       "sha256": "a6ee56b93e24da780ddf9f6c2aea0acade4f78a7962c21656d0a95e76a735576",
-      "source_fingerprint": "8bfc696cb6708220c0a73d7b88b1b63a15edf0c14efa6c85cb799a7ecce83d22"
+      "source_fingerprint": "90f340ed8c6d31d1943939ec175b694f550780575ddc68dc969e36542aedf005"
     }
   },
   "schema_version": 1

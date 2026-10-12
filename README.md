@@ -18,6 +18,8 @@
 
 当前模板版本：`2.3.0`。包含 **11 个项目生命周期 Skill + 14 个 Superpowers 方法 Skill，共 25 个 Skills**，提供 27 个受管适配入口；没有示例业务代码、验收样例项目或构建历史。可行性实验和人工业务验收复用 `project-verification`，不新增 Skill。
 
+维护或扩展基座本身时，按需阅读 [工作流框架架构概览](docs/WORKFLOW-ARCHITECTURE.md)，了解层次关系、运行机制、生命周期与扩展边界。本文介绍如何使用，`AGENTS.md` 规定如何执行，架构概览解释框架如何协作。模板复制到业务项目后，业务架构和进度仍以该项目自己的上下文及真实代码为准，框架概览不进入业务开发的必读链。
+
 ## 1. 三分钟开始
 
 ### 新项目
@@ -83,7 +85,8 @@
 │   ├── LICENSE-SCOPE.md         许可适用范围
 │   └── THIRD_PARTY_NOTICES.md   第三方来源声明
 └── docs/
-    └── README.md                项目文档导航及维护约定
+    ├── README.md                项目文档导航及维护约定
+    └── WORKFLOW-ARCHITECTURE.md  框架架构概览；不代表下游业务架构
 ```
 
 没有预建 `src/`、`apps/`、数据库、容器或 CI。它们应由实际业务和技术栈决定。`references/`、`scripts/` 等 Skill 子目录只在确有用途时存在；上游必要资源不是示例业务。

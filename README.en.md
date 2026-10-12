@@ -18,6 +18,8 @@ It addresses *how to work with AI on development continuously and methodically*.
 
 Current template version: `2.3.0`. It includes **11 project lifecycle Skills and 14 Superpowers method Skills, for 25 Skills in total**, with 27 managed adapter entry points and no sample application code, acceptance-test sample projects, or build history. Feasibility experiments and human business acceptance reuse `project-verification`; no Skill is added.
 
+When maintaining or extending the foundation itself, consult the [workflow architecture overview](docs/WORKFLOW-ARCHITECTURE.md) (Chinese) as needed for its layers, mechanisms, lifecycle, and extension boundaries. This README explains usage, `AGENTS.md` governs execution, and the overview explains the framework's design. After copying the template into a product project, that project's own context and actual code remain the sources for its architecture and progress; the framework overview is not required reading for product development.
+
 ## 1. Get started in three minutes
 
 ### New project
@@ -83,7 +85,8 @@ project-root/
 │   ├── LICENSE-SCOPE.md         Scope of the license
 │   └── THIRD_PARTY_NOTICES.md   Third-party source notices
 └── docs/
-    └── README.md                Project documentation navigation and maintenance conventions
+    ├── README.md                Project documentation navigation and maintenance conventions
+    └── WORKFLOW-ARCHITECTURE.md  Framework overview; not the downstream product architecture
 ```
 
 There are no pre-created `src/` or `apps/` directories, databases, containers, or CI configurations. Those should be determined by the actual product and technology stack. Skill subdirectories such as `references/` and `scripts/` exist only where they have a real purpose; required upstream resources are not sample application code.
