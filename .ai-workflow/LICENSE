@@ -1,21 +1,65 @@
-MIT License
+Agentic Dev Workflow 个人开发与研究许可 1.0
+Agentic Dev Workflow Personal Development and Research License 1.0
+项目内许可标识：LicenseRef-ADW-Personal-Research-1.0
 
 Copyright (c) 2026 codex-project-kit contributors
+项目维护者：Misayhuiyi
+各原创贡献的著作权归相应权利人所有；维护者身份不表示受让其他贡献者的著作权。
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+本许可仅授予自然人以个人身份进行私人学习、私人开发与私人研究所需的有限权利，禁止商业使用，并排除组织用途。它是自定义的源码可见许可，不是 MIT 许可，也不是开源许可。
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+一、适用材料与授权方
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+“材料”指本项目中由有权授权的著作权人明确按照本许可发布的原创代码、规则、提示词、Skill、模板、适配内容及文档，具体边界见同目录 LICENSE-SCOPE.md。“授权方”指对应材料的著作权人或有权授予本许可的主体。本许可不因文件存放于本仓库而自动覆盖第三方内容。
+
+二、个人用途授权
+
+在持续遵守本许可的条件下，授权方免费授予你非独占、不得转授权的许可，允许你仅为自己的私人学习、私人开发和私人研究，下载、复制、安装、运行、阅读、修改材料，并在由你个人控制、仅供你个人使用的设备或私人环境中保存必要副本和修改版本。
+
+“私人”指由自然人以个人身份、为自己的非商业目的开展，且不作为受雇、委托、承包、组织项目或为其他主体履行职责的一部分。个人自学可以与职业领域相关，但将材料用于工作任务、客户任务或组织项目不属于私人用途。学校、实验室、非营利机构和其他组织不因非营利身份取得本许可。
+
+三、禁止商业使用与组织使用
+
+未经有权授权的权利人另行明确书面授权，不得将材料及包含材料受保护表达的修改版本用于直接或间接取得商业收益、商业优势、报酬，或支持商业活动，包括：
+
+1. 企业或其他组织的内部业务、办公、研发、测试、培训、运营或生产使用；
+2. 受雇工作、接单、外包、咨询、客户交付，或代表其他主体实施开发和研究；
+3. 商业产品或服务的设计、开发、验证、部署、维护和运营，包括尚未收费、尚未盈利或尚未上线的商业项目；
+4. 销售、出租、收费许可、付费课程、商业培训、广告变现、订阅服务、托管服务，或将材料作为商业产品或服务的组成部分；
+5. 将材料用于商业模型或商业服务的训练、微调、评测、知识库或工作流。
+
+免费提供、不出售材料本身、仅在内部使用、暂未盈利、由个人实施，均不能使上述行为获得本许可授权。组织的非商业用途也不在本许可授权范围内。
+
+四、复制、分享与保留声明
+
+所有按本许可制作的材料副本、实质性节选和修改版本须保留适用的著作权、许可、来源与第三方声明。修改版本须清楚标明修改事实，不得冒充官方版本或暗示获得原作者背书。
+
+除第六条规定的独立权利或另行书面授权外，本许可不允许向他人提供材料或含有材料受保护表达的修改版本，不允许公开再发布、建立镜像、打包分发、转授权或向多人提供访问；免费分享同样不在授权范围内。你可以分享原项目链接。
+
+五、开发成果与辅助工具
+
+你独立创作、未包含材料受保护表达的业务代码、数据、图片、研究结论和产品文档，其著作权与许可由相应权利人决定，本许可不自动附加到这些成果上。但使用材料开发商业成果的行为仍属于第三条禁止的使用，不能以成果采用其他许可证为由规避。
+
+为第二条所允许的个人用途，你可以使用个人开发工具和 AI 辅助服务，并仅向必要的服务提供者传输完成该个人任务所需的材料；应通过适用设置或服务条款使其处理限于提供该任务服务，不授权提供者对材料进行独立再利用或训练。购买个人设备、云资源或工具订阅本身不构成对材料的商业使用。这一有限处理权限不授予服务提供者独立使用、分发材料的权利，也不允许据此向客户或公众提供服务。
+
+六、第三方内容、既有许可与法定权利
+
+第三方内容依其各自许可和声明处理；第三方原有授权不因本许可而缩减。已合法按 MIT 或其他许可发布、取得的历史内容，仍可依相应许可使用、修改和分发。本许可不追溯撤销或变更此前有效授予的权利，也不因历史内容出现在新版本中而消除对该历史内容的既有授权。
+
+本许可不限制适用法律允许且无需另行授权的使用，不对抽象思想、一般方法或未复制受保护表达的独立实现主张额外版权限制。项目公开托管于 GitHub 时，依适用 GitHub 服务条款取得的查看及站内 fork 权利不受本许可缩减；这些平台权利本身不等于对材料的商业使用授权。
+
+七、许可期限与终止
+
+在相应著作权保护期内，只要你持续遵守本许可，对所获材料的本许可授权持续有效。违反本许可时，本许可授予你的权利自动终止。终止后须停止依本许可进行的使用，并删除或停止使用仅依本许可持有的副本；依法必须保留的副本仅可作合规留存，不得继续依本许可运行或使用。第三方许可、有效的历史许可和法定权利不受此终止条款影响。终止不免除此前行为产生的责任；恢复授权须取得有权授权者的明确书面同意。
+
+八、保留权利
+
+除本许可明确授予或其他有效授权允许的权利外，其余权利由各自权利人保留。本许可不转让著作权，不授予商标、名称、标识或专利权，也不允许声称本项目或作者认可你的项目。
+
+九、无担保与责任
+
+材料按现状提供。授权方不承诺材料无错误、适合特定用途、持续维护或满足你的预期。在适用法律允许的范围内，授权方不对因材料使用或无法使用而产生的损失承担责任；依法不得排除或限制的责任除外。
+
+十、文本与版本
+
+本许可的中文正文为解释依据。某一条款被认定无效或不可执行时，在适用法律允许的范围内，其余条款继续有效。后续许可文本的发布不会自动改变你已取得副本所适用的许可。本许可从授权方将相应材料明确按本许可发布时适用于该次发布，不以本文件的起草或保存日期追溯生效。

@@ -79,7 +79,7 @@
 │   ├── VERSION                 工作流版本
 │   ├── SOURCES.lock.json        锁定的调研和第三方来源
 │   ├── ADAPTERS.lock.json       受管适配文件的指纹，防止覆盖人工修改
-│   ├── LICENSE                 本工作流原创部分的 MIT 许可
+│   ├── LICENSE                 本工作流原创部分的个人开发与研究许可
 │   ├── LICENSE-SCOPE.md         许可适用范围
 │   └── THIRD_PARTY_NOTICES.md   第三方来源声明
 └── docs/
@@ -419,4 +419,8 @@ py -3 -B .ai-workflow/scripts/sync_adapters.py --root . --allow-extra-skills --c
 
 14 个方法 Skill 基于锁定的 [Superpowers 6.3.0](https://github.com/obra/superpowers/tree/b36e0829c6d0140e93cfef2ca599b1b07d4a7797)，带有本项目的按需路由补丁，并非全部上游原样正文。版本、许可、上游来源和单独标识的 UI 元数据见 [来源锁](.ai-workflow/SOURCES.lock.json)、[第三方声明](.ai-workflow/THIRD_PARTY_NOTICES.md) 与 [补丁记录](.ai-workflow/third_party/superpowers/PATCHES.md)。本项目不是这些 AI 工具的官方发行包。
 
-原创工作流采用 [MIT](.ai-workflow/LICENSE)，具体见 [许可范围](.ai-workflow/LICENSE-SCOPE.md)。这不会自动替你的业务代码、数据、图片或产品文档选择许可证；项目所有者应自行决定项目许可。
+本次按新条款发布的原创工作流采用 [个人开发与研究许可 1.0](.ai-workflow/LICENSE)，仅允许自然人以个人身份进行私人学习、私人开发和私人研究，禁止商业使用及组织使用。企业内部研发、受雇工作、接单、客户交付，以及尚未收费或尚未盈利的商业产品开发，均不在授权范围内；学校、实验室及非营利机构的组织项目也不在授权范围内。它是自定义的源码可见许可，不是 MIT 或开源许可，具体边界见 [许可范围](.ai-workflow/LICENSE-SCOPE.md)。
+
+Superpowers 的来源文件及现有路由补丁继续适用其保留的 MIT 许可，不受原创部分的非商业限制；单独标识的 UI 包装元数据依其分发源条款处理。此前已经按 MIT 或其他有效许可发布的内容，原授权继续适用，新许可不追溯收回历史授权。
+
+本许可不会自动替你的业务代码、数据、图片或产品文档选择许可证；相应权利人自行决定成果许可。但使用本许可材料为商业项目进行开发的行为仍被禁止，不能以成果采用其他许可证为由规避。复制、修改、分发及 GitHub 平台权利的具体条件见许可正文。

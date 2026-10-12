@@ -79,7 +79,7 @@ project-root/
 │   ├── VERSION                  Workflow version
 │   ├── SOURCES.lock.json        Locked research and third-party sources
 │   ├── ADAPTERS.lock.json       Fingerprints of managed adapter files, preventing accidental overwrite of manual changes
-│   ├── LICENSE                  MIT license for the original parts of this workflow
+│   ├── LICENSE                  Personal development and research license for original workflow content
 │   ├── LICENSE-SCOPE.md         Scope of the license
 │   └── THIRD_PARTY_NOTICES.md   Third-party source notices
 └── docs/
@@ -420,4 +420,8 @@ The foundational rules were researched with reference to [Misayhuiyi/Rules](http
 
 The 14 method Skills are based on the locked [Superpowers 6.3.0](https://github.com/obra/superpowers/tree/b36e0829c6d0140e93cfef2ca599b1b07d4a7797) with this project's on-demand routing patches; their bodies are not all unchanged upstream copies. Version, license, upstream provenance, and separately identified UI metadata are documented in the [source lock](.ai-workflow/SOURCES.lock.json), [third-party notices](.ai-workflow/THIRD_PARTY_NOTICES.md), and [patch record](.ai-workflow/third_party/superpowers/PATCHES.md). This project is not an official distribution of any of these AI tools.
 
-The original workflow is released under the [MIT License](.ai-workflow/LICENSE); see [License Scope](.ai-workflow/LICENSE-SCOPE.md) for details. This does not automatically select a license for your product code, data, images, or product documentation. Project owners should choose their own project license.
+Original workflow content released under the new terms uses the [Personal Development and Research License 1.0](.ai-workflow/LICENSE). It permits only natural persons acting in a personal capacity to conduct private learning, development, and research. Commercial use and organizational use are prohibited. Company-internal research and development, employment tasks, freelance or client work, and development of commercial products are excluded even before payment, revenue, or launch. Institutional projects, including those of schools, laboratories, and nonprofit organizations, are also excluded. This is a custom source-available license, not MIT or an open-source license; see [License Scope](.ai-workflow/LICENSE-SCOPE.md). The Chinese license text governs interpretation.
+
+Superpowers source-derived files and the existing local routing patches remain under the preserved MIT license and are excluded from the restrictions on original workflow content. Separately identified UI packaging metadata follows its distribution-source terms. Content previously released under MIT or another valid license retains its existing authorization; the new license does not revoke historical grants.
+
+This license does not automatically license independently created product code, data, images, or product documentation. Their respective rights holders choose those terms. Using the licensed workflow materials to develop a commercial project remains prohibited even if its outputs use a different license. Copying, modification, distribution, and GitHub platform rights are addressed in the license text.

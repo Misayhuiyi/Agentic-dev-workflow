@@ -1,7 +1,37 @@
-# License scope
+# 工作流许可范围
 
-The source identities in `SOURCES.lock.json`, the third-party notices, and the vendored `FILES.sha256` distinguish original workflow files, upstream material, and packaging metadata. Hash inventories do not determine or expand licensing.
+本次按新许可发布的原创工作流采用 [个人开发与研究许可 1.0](LICENSE)，只授权自然人以个人身份进行私人学习、私人开发和私人研究，禁止商业使用及组织使用。源码公开可见不表示允许任意复用；本原创部分不再标称采用 MIT 或开源许可。
 
-The MIT license in `.ai-workflow/LICENSE` covers only the original workflow-template files in this distribution. It does not automatically license the root project, future application or business code, product documentation, data, media, or other project assets. Project owners must choose those terms separately.
+## 原创内容
 
-Vendored upstream material is excluded from the workflow-template grant and remains under the license and notice preserved with that source. Packaging metadata is also excluded from that grant: its provenance and applicable terms must be determined from its distribution source, as documented in `THIRD_PARTY_NOTICES.md`.
+在相应权利人有权按新许可发布的前提下，新许可覆盖本工作流中的原创规则、生命周期路由、脚本、模板、原创 Skill、适配表达及说明文档，包括 `AGENTS.md`、`.ai-workflow/ROUTING.md`、`.ai-workflow/superpowers-compat.md`、`.ai-workflow/scripts/`、`.ai-workflow/templates/` 和未被下述来源排除的原创内容。混合文件中的第三方表达按第三方许可处理，不因所在路径获得新的限制。
+
+不得将这些材料用于企业内部工作、受雇研发、接单、客户交付、商业产品或服务的开发与运营。即使产品尚未收费或尚未盈利，商业研发也不在授权范围内。学校、实验室和非营利机构的组织项目同样不在本许可范围内；自然人的独立自学不因其学生、员工或研究人员身份而被排除。
+
+## Superpowers 内容与现有补丁
+
+[来源锁](SOURCES.lock.json) 中 `sources.superpowers` 及 [文件清单](third_party/superpowers/FILES.sha256) 标识的 46 个 Superpowers 来源文件，继续按照 [保留的 MIT 许可](third_party/superpowers/LICENSE) 分发。这里明确将其中 14 个方法入口现有的本项目路由补丁也保留在 MIT 范围内，避免把混合文件整体误标为本项目非商业材料；这不表示本项目其他原创文件也适用 MIT。
+
+这些文件实际位于 `.agents/skills/` 等位置，并非仅位于 `third_party/` 目录。使用、复制或单独提取时，须保留适用的上游著作权和 MIT 许可声明。只使用这些 MIT 材料，且不复制或使用新许可覆盖的原创材料，可以依 MIT 许可进行商业使用。具体来源与修改记录见 [第三方声明](THIRD_PARTY_NOTICES.md) 和 [补丁记录](third_party/superpowers/PATCHES.md)。
+
+## UI 包装元数据
+
+来源锁中 `sources.superpowers_codex_metadata` 标识的 14 个 `agents/openai.yaml` 是来自 Codex 分发源的包装元数据。其许可依该分发源的适用条款确定；本项目的非商业许可和 Superpowers 的 MIT 许可都不替该分发源授予权利。来源锁和文件哈希只识别来源与字节，不补足缺失授权。
+
+## 调研参考与独立内容
+
+`Misayhuiyi/Rules` 仅作为调研参考；来源锁未记录其许可，也未记录复制其文件。新许可仅覆盖本项目有权授权的独立原创表达，不为参考仓库中的内容授予任何权利。
+
+## 历史版本与新发布的边界
+
+此前已按 MIT 或其他有效许可发布的内容，其原授权继续适用。更新本文件、删除旧许可证、修改仓库可见性或发布新版本，都不在本许可下追溯禁止历史内容的商业使用。历史内容在新版中仍然出现，也不消除已存在的原授权。
+
+因此，新许可用于明确新发布的授权条件；它不能保证整个仓库及全部历史内容都无法商用。新版本中的新增原创表达，应有清楚的版本、提交及权属记录，才能与历史 MIT 内容区分。其他贡献者的权利不会因维护者更新许可文件而自动转让。
+
+## 业务项目与使用成果
+
+本许可不自动替业务代码、数据、图片、产品文档或其他独立成果选择许可证。相应权利人自行决定成果许可；但使用本许可材料为商业项目进行研发仍被禁止。将成果标为 MIT、闭源或其他许可，不会使此前禁止的工作流使用变成获准使用。
+
+允许范围内的个人副本和修改版本须保留声明；公开再发布、镜像、向他人分发以及多人访问，依许可正文第四条处理。GitHub 公开仓库依适用平台条款允许的查看及站内 fork，依正文第六条保留。
+
+许可正文是原创部分的授权依据；范围说明用于划分来源。单独适用的第三方许可、有效历史授权、法定权利和适用平台授权，不因概括性文案而被缩减。

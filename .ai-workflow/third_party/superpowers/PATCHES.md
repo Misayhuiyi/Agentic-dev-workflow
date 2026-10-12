@@ -22,3 +22,7 @@ Coverage: conversation/Skill-explanation routing, an actual low-risk feature wit
 - Lifecycle routing and project authorization live in `AGENTS.md` and `.ai-workflow/superpowers-compat.md`. Installed global plugins are separate sources and are not patched by this template.
 
 Future upgrades must compare against the original commit, reapply/review these local patches, preserve the upstream identity, and rerun affected behavior and integrity checks.
+
+## Licensing of existing patches
+
+The existing local routing patches described above remain under MIT together with the Superpowers-derived files. They are excluded from the personal-use restrictions on original workflow content. The workflow license change does not alter the method files, upstream lock, or distributed file hashes. Preserve upstream attribution and the MIT license when redistributing these files. This statement does not assign MIT to other original workflow files or to separately sourced Codex UI packaging metadata.
